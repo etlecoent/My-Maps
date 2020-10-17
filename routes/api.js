@@ -15,9 +15,11 @@ module.exports = (db) => {
 
     let user_id = req.session.user_id ? req.session.user_id : null;
     if (user_id) {
-    // Put is name instead of login button && display his maps and favorite maps
+      // Put is name instead of login button && display his maps and favorite maps
+
+      res.send("<h1>Connected, see your maps</h1>");
     } else {
-    // Put a login button and display random mapsà
+    // Put a login button and display random maps
       res.render("../views/maps");
     }
 
