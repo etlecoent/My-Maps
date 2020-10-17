@@ -1,0 +1,6 @@
+-- Insert data for pins
+INSERT INTO pins (title, description, longitude, latitude, image_url) VALUES
+  ('Pizzeria 1', 'Best Margaritas here!', 45.553344, -73.597773, 'https://lh5.googleusercontent.com/p/AF1QipOIrRosxQMdEQ2cEmaiqiJX4u5tUzCPyxqk3eEY=w434-h240-k-no'),
+  ('Bell Centre', 'Go Habs Go!', 45.496138, -73.569302, 'https://www.google.com/maps/place/Centre+Bell,+Montreal,+QC/@45.4960475,-73.5692804,3a,110.2y,90t/data=!3m8!1e2!3m6!1sAF1QipOUJgleygPzuIJd8SvylrDQ3wy7XZz_3Spt_WQQ!2e10!3e12!6shttps:%2F%2Flh5.googleusercontent.com%2Fp%2FAF1QipOUJgleygPzuIJd8SvylrDQ3wy7XZz_3Spt_WQQ%3Dw146-h86-k-no!7i750!8i440!4m15!1m9!3m8!1s0x4cc91a67fe7938ed:0xe100f37b37ee875b!2sCentre+Bell,+Montreal,+QC!3b1!8m2!3d45.4960475!4d-73.5692804!14m1!1BCgIgARICCAI!3m4!1s0x4cc91a67fe7938ed:0xe100f37b37ee875b!8m2!3d45.4960475!4d-73.5692804'),
+  ('Randolp Pub', 'Have fun with different board games',45.548014, -73.592741, 'https://www.google.com/maps/place/Randolph+Pub+Ludique+Rosemont/@45.5477406,-73.5930372,3a,75y,90t/data=!3m8!1e2!3m6!1sAF1QipMoGiSQaTT0GYT5ArO1DxLtQx2dsUESsxLpeAD8!2e10!3e12!6shttps:%2F%2Flh5.googleusercontent.com%2Fp%2FAF1QipMoGiSQaTT0GYT5ArO1DxLtQx2dsUESsxLpeAD8%3Dw203-h114-k-no!7i1536!8i865!4m5!3m4!1s0x4cc91945538f28bf:0xd9ba44549fc3a9b1!8m2!3d45.5479167!4d-73.592794445.548014, -73.592741');
+
