@@ -18,6 +18,31 @@
   </head>
 
   <body>
-    <h1>Put the profile path here</h1>
+    <nav>
+      <div id="logo">LOGO</div>
+      <button type="button" id="loginButton">LOGIN</button>
+      <button type="button" id="register">REGISTER</button>
+    </nav>
+    <header>
+      <button type="button" class="scrollButton" id="leftScrollButton"></button>
+      <section class="smallMapSection">
+      <div class="smallMap" id="smallMap1"></div>
+      </section>
+      <button type="button" class="scrollButton" id="rightScrollButton"></button>
+    </header>
+    <main class="searchArea">
+      <h3 id="searchInstruction">Search for maps:</h3>
+      <form class="mapSearchInput">
+        <textarea name="searchText" class="formTextArea" placeholder="Search By Key Word"></textarea>
+        <button type="submit" id="searchSubmitButton" type="submit">SEARCH</button>
+      </form>
+      <section class="searchResults">
+        <!-- where our results will be displayed -->
+        <div class="bigMap" id="bigMap1"></div>
+      </section>
+    </main>
   </body>
+
 </html>
+
+
