@@ -30,11 +30,11 @@ CREATE TABLE maps (
   longitude FLOAT,
   latitude FLOAT,
   map_location_id INTEGER REFERENCES map_locations(id) ON DELETE CASCADE,
-  owner_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+  owner_id INTEGER REFERENCES users(id) ON DELETE CASCADE
 );
 
 CREATE TABLE map_locations (
   id SERIAL PRIMARY KEY NOT NULL,
   location_id INTEGER REFERENCES pins(id) ON DELETE CASCADE,
-  map_id INTEGER REFERENCES maps(id) ON DELETE CASCADE,
+  map_id INTEGER REFERENCES maps(id) ON DELETE CASCADE
 );
