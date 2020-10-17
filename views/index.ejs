@@ -6,12 +6,35 @@
     <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
     <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
     <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+   integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+   crossorigin=""/>
 
     <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
     <script type="text/javascript" src="/scripts/app.js"></script>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+    crossorigin=""></script>
   </head>
 
   <body>
-    <h1>Hello World!</h1>
+
+    <div id="mapid" style="height: 180px; width: 180px; align-content: center"></div>
+    <script>
+
+      // initialize the map
+      var myMap = L.map('mapid').setView([42.35, -71.08], 13);
+
+      // load a tile layer
+      // L.tileLayer('http://tiles.mapc.org/basemap/{z}/{x}/{y}.png',
+      //   {
+      //     attribution: 'Tiles by <a href="http://mapc.org">MAPC</a>, Data by <a href="http://mass.gov/mgis">MassGIS</a>',
+      //     maxZoom: 17,
+      //     minZoom: 9
+      //   }).addTo(map);
+      // $.('')
+
+      </script>
   </body>
 </html>
+
