@@ -8,21 +8,6 @@
 const express = require('express');
 const router  = express.Router();
 
-module.exports = (db) => {
-  router.get("/maps", (req, res) => {
-    db.query(`SELECT * FROM users;`)
-      .then(data => {
-        const users = data.rows;
-        res.json({ users });
-      })
-      .catch(err => {
-        res
-          .status(500)
-          .json({ error: err.message });
-      });
-  });
-  return router;
-};
 
 // GET Route for Log In at /login
 module.exports = (db) => {
@@ -43,10 +28,12 @@ module.exports = (db) => {
           .json({ error: err.message });
       });
   });
+
+  // Route for Log Out at /logout
+
+  router.post('/logout', (req,res) => {
+    req.session.user_id = null;
+    res.redirect('../api/maps');
+  });
   return router;
 };
-
-
-// Route for Log Out at /logout
-
-

@@ -10,29 +10,32 @@ const router  = express.Router();
 
 module.exports = (db) => {
   router.get("/maps", (req, res) => {
-    // let query = `SELECT * FROM maps`;
-    // console.log(query);
 
     let user_id = req.session.user_id ? req.session.user_id : null;
+    let templateVars = {
+      name : null
+    };
+
     if (user_id) {
       // Put is name instead of login button && display his maps and favorite maps
+      let query = ` SELECT users.name FROM users WHERE users.id = $1`;
 
-      res.send("<h1>Connected, see your maps</h1>");
+      db.query(query, [1]).then(data => {
+
+        templateVars.name = data.rows[0].name;
+        console.log(templateVars);
+
+        res.render("../views/maps", templateVars);
+      })
+      .catch(err => {
+        res
+          .status(500)
+          .json({ error: err.message });
+      });
     } else {
-    // Put a login button and display random maps
-      res.render("../views/maps");
+      // Put a login button and display random maps
+      res.render("../views/maps", templateVars);
     }
-
-    // db.query(query)
-    //   .then(data => {
-    //     const widgets = data.rows;
-    //     res.json({ widgets });
-    //   })
-    //   .catch(err => {
-    //     res
-    //       .status(500)
-    //       .json({ error: err.message });
-    //   });
   });
   return router;
 };
