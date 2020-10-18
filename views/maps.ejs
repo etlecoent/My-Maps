@@ -39,14 +39,12 @@
     <header>
       <button type="button" class="scrollButton" id="leftScrollButton"></button>
       <section class="smallMapSection">
-        <div class="smallMap" id="smallMap1" style="height: 150px; width: 150px;"></div>
-
       </section>
       <button type="button" class="scrollButton" id="rightScrollButton"></button>
     </header>
     <main class="searchArea">
       <h3 id="searchInstruction">Search for maps:</h3>
-      <form class="mapSearchInput">
+      <form method="GET" action="../users/maps/search" class="mapSearchInput">
         <textarea name="searchText" class="formTextArea" placeholder="Search By Key Word"></textarea>
         <button type="submit" id="searchSubmitButton" type="submit">SEARCH</button>
       </form>

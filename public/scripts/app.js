@@ -9,8 +9,22 @@
 //   });;
 // });
 
-$(document).ready(() => {
-  let mapCounter = 0;
-  mapDrawer(mapCounter, 'Test', [45.553344, -73.597773]);
+// SERVER SIDE
+// WHEN GET ON /users/maps -> res.render SEND THE HTML
 
+// WHEN GET ON /api/maps -> res.send the data from the SQL request SEND THE DATA
+
+// USER SIDE
+// GET /users/maps then ASYNCH GET call on /example/maps to retrieve the data
+
+
+$(document).ready(() => {
+
+  $.get('/api/maps', data => {
+    console.log(data);
+  }).then(data => {
+    for (let o of data) {
+      mapDrawer(o.id, o.title, [o.latitude, o.longitude]);
+    }
+  });
 });

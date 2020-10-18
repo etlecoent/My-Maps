@@ -10,33 +10,25 @@ const router  = express.Router();
 
 module.exports = (db) => {
   router.get("/maps", (req, res) => {
+    // SEND THE DATA FROM THE QUERY
+    let query = ` SELECT maps.*
+                    FROM maps
+                    WHERE owner_id = $1
+                    GROUP BY maps.id;`;
+    // Add favorite maps
 
-    let user_id = req.session.user_id ? req.session.user_id : null;
-    let templateVars = {
-      name : null
-    };
+    db.query(query, [req.session.user_id]).then(dataQuery => {
+      const maps = dataQuery.rows;
+      res.send(maps);
+    })
+    .catch(err => {
+      res
+        .status(500)
+        .json({ error: err.message });
+    });
 
-    if (user_id) {
-      // Put is name instead of login button && display his maps and favorite maps
-      let query = ` SELECT users.name FROM users WHERE users.id = $1`;
-
-      db.query(query, [1]).then(data => {
-
-        templateVars.name = data.rows[0].name;
-        console.log(templateVars);
-
-        res.render("../views/maps", templateVars);
-      })
-      .catch(err => {
-        res
-          .status(500)
-          .json({ error: err.message });
-      });
-    } else {
-      // Put a login button and display random maps
-      res.render("../views/maps", templateVars);
-    }
   });
+
   return router;
 };
 
