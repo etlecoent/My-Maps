@@ -8,14 +8,12 @@
 const express = require('express');
 const router  = express.Router();
 
-
 // GET Route for Log In at /login
 module.exports = (db) => {
   router.get("/login", (req, res) => {
 
     let id = 1;
     req.session.user_id = id;
-
 
     db.query(`SELECT * FROM users;`)
       .then(data => {

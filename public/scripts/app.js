@@ -8,3 +8,9 @@
 //     }
 //   });;
 // });
+
+$(document).ready(() => {
+  let mapCounter = 0;
+  mapDrawer(mapCounter, 'Test', [45.553344, -73.597773]);
+
+});
