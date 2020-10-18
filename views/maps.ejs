@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Profile</title>
+    <title>Maps</title>
 
     <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
     <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
@@ -20,8 +20,19 @@
   <body>
     <nav>
       <div id="logo">LOGO</div>
-      <button type="button" id="loginButton">LOGIN</button>
-      <button type="button" id="register">REGISTER</button>
+      <% if(name) {%>
+        <span><%= name %></span>
+        <form method="POST" action="../users/logout">
+          <button type="submit" id="logoutButton">LOGOUT</button>
+        </form>
+      <%} else {%>
+        <form method="GET" action="../users/login">
+          <button type="submit" id="loginButton">LOGIN</button>
+        </form>
+        <form method="GET" action="../users/maps">
+          <button type="button" id="registerButton">REGISTER</button>
+        </form>
+      <%}%>
     </nav>
     <header>
       <button type="button" class="scrollButton" id="leftScrollButton"></button>
