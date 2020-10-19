@@ -9,14 +9,17 @@ const express = require('express');
 const router  = express.Router();
 
 module.exports = (db) => {
-  router.get("/maps", (req, res) => {
-    // SEND THE DATA FROM THE QUERY
-    let query = ` SELECT maps.*
-                    FROM maps
-                    WHERE owner_id = $1
-                    GROUP BY maps.id;`;
 
-    db.query(query, [req.session.user_id]).then(dataQuery => {
+  router.get("/maps/:id", (req, res) => {
+    let user_id = req.session.user_id ? req.session.user_id : null;
+    let map_id = req.params.id;
+
+    let query = ` SELECT maps.*
+                  FROM maps
+                  WHERE maps.id = $1
+                  GROUP BY maps.id;`;
+
+    db.query(query, [map_id]).then(dataQuery => {
       const maps = dataQuery.rows;
       res.send(maps);
     })
@@ -25,7 +28,42 @@ module.exports = (db) => {
         .status(500)
         .json({ error: err.message });
     });
+  });
 
+  router.get("/maps", (req, res) => {
+    let user_id = req.session.user_id ? req.session.user_id : null;
+
+    if (user_id) {
+      let query = ` SELECT maps.*
+                    FROM maps
+                    WHERE user_id = $1
+                    GROUP BY maps.id;`;
+
+
+      db.query(query, [user_id]).then(dataQuery => {
+        const maps = dataQuery.rows;
+        res.send(maps);
+      })
+      .catch(err => {
+        res
+          .status(500)
+          .json({ error: err.message });
+      });
+    } else {
+      let query = ` SELECT maps.*
+                    FROM maps
+                    GROUP BY maps.id;`;
+
+      db.query(query).then(dataQuery => {
+        const maps = dataQuery.rows;
+        res.send(maps);
+      })
+      .catch(err => {
+        res
+          .status(500)
+          .json({ error: err.message });
+      });
+    }
   });
 
   return router;
