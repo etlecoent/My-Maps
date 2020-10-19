@@ -24,14 +24,14 @@
       <div id="logo">LOGO</div>
       <% if(name) {%>
         <span><%= name %></span>
-        <form method="POST" action="../users/logout">
+        <form method="POST" action="/users/logout">
           <button type="submit" id="logoutButton">LOGOUT</button>
         </form>
       <%} else {%>
-        <form method="GET" action="../users/login">
+        <form method="GET" action="/users/login">
           <button type="submit" id="loginButton">LOGIN</button>
         </form>
-        <form method="GET" action="../users/maps">
+        <form method="GET" action="/users/maps">
           <button type="button" id="registerButton">REGISTER</button>
         </form>
       <%}%>
