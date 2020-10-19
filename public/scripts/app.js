@@ -21,7 +21,6 @@
 $(document).ready(() => {
 
   $.get('/api/maps', data => {
-    console.log(data);
   }).then(data => {
     for (let o of data) {
       mapDrawer(o.id, o.title, [o.latitude, o.longitude]);

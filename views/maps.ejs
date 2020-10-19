@@ -36,22 +36,11 @@
         </form>
       <%}%>
     </nav>
-    <header>
+    <main>
       <button type="button" class="scrollButton" id="leftScrollButton"></button>
       <section class="smallMapSection">
       </section>
       <button type="button" class="scrollButton" id="rightScrollButton"></button>
-    </header>
-    <main class="searchArea">
-      <h3 id="searchInstruction">Search for maps:</h3>
-      <form method="GET" action="../users/maps/search" class="mapSearchInput">
-        <textarea name="searchText" class="formTextArea" placeholder="Search By Key Word"></textarea>
-        <button type="submit" id="searchSubmitButton" type="submit">SEARCH</button>
-      </form>
-      <section class="searchResults">
-        <!-- where our results will be displayed -->
-        <div class="bigMap" id="bigMap1"></div>
-      </section>
     </main>
   </body>
 </html>

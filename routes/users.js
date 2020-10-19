@@ -25,7 +25,7 @@ module.exports = (db) => {
                     WHERE users.id = $1;`
 
       db.query(query, [1]).then(dataQuery => {
-        // console.log(dataQuery.rows[0].user_name);
+
         templateVars.name = dataQuery.rows[0].user_name;
 
         res.render("../views/maps", templateVars);
@@ -45,24 +45,16 @@ module.exports = (db) => {
 
     let id = 1;
     req.session.user_id = id;
-
-    db.query(`SELECT * FROM users;`)
-      .then(data => {
-        const users = data.rows;
-        res.json({ users });
-      })
-      .catch(err => {
-        res
-          .status(500)
-          .json({ error: err.message });
-      });
+    res.redirect('/users/maps');
   });
 
   // Route for Log Out at /logout
 
   router.post('/logout', (req,res) => {
+
     req.session.user_id = null;
-    res.redirect('../api/maps');
+    res.redirect('/users/maps');
   });
+
   return router;
 };

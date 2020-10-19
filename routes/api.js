@@ -15,7 +15,6 @@ module.exports = (db) => {
                     FROM maps
                     WHERE owner_id = $1
                     GROUP BY maps.id;`;
-    // Add favorite maps
 
     db.query(query, [req.session.user_id]).then(dataQuery => {
       const maps = dataQuery.rows;
@@ -31,19 +30,3 @@ module.exports = (db) => {
 
   return router;
 };
-
-// GET Route for maps at /maps
-
-// GET Route for editing a map at /maps/:id/edit
-
-// GET Route for specific map at /maps/:id
-
-// GET Route for a new map at /maps/new
-// POST Route for a new map at /maps
-
-// POST Route for favourite a map /maps/:id/favorite
-// POST Route for favourite a map /maps/:id/favorite
-
-// POST Route for updating an existing map on /maps/:id
-
-// POST Route for deleting an existing map on /maps/:id
