@@ -26,4 +26,10 @@ $(document).ready(() => {
       mapDrawer(o.id, o.title, [o.latitude, o.longitude]);
     }
   });
+
+  $.get('/api/maps/:id', data => {
+  }).then(data => {
+    mapDrawer(o.id, o.title, [o.latitude, o.longitude]);
+  });
+
 });
