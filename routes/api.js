@@ -10,25 +10,6 @@ const router  = express.Router();
 
 module.exports = (db) => {
 
-  router.get("/maps/:id", (req, res) => {
-    let user_id = req.session.user_id ? req.session.user_id : null;
-    let map_id = req.params.id;
-    console.log(map_id);
-    let query = ` SELECT maps.*
-                  FROM maps
-                  WHERE maps.id = $1
-                  GROUP BY maps.id;`;
-
-    db.query(query, [map_id]).then(dataQuery => {
-      const maps = dataQuery.rows;
-      res.send(maps);
-    })
-    .catch(err => {
-      res
-        .status(500)
-        .json({ error: err.message });
-    });
-  });
 
   router.get("/maps", (req, res) => {
     let user_id = req.session.user_id ? req.session.user_id : null;
@@ -65,6 +46,51 @@ module.exports = (db) => {
       });
     }
   });
+
+  router.post('/maps', (req, res) => {
+    let user_id = req.session.user_id ? req.session.user_id : null;
+    if (user_id) {
+      const {title, location} = req.body;
+      const [lat, long] = location.split(', ');
+      const latitude = Number(lat);
+      const longitude = Number(long);
+      const query = ` INSERT INTO maps (title, latitude, longitude, user_id) VALUES ($1, $2, $3, $4)
+                      RETURNING *;`
+
+      db.query(query, [title, latitude, longitude, user_id]).then(dataQuery => {
+
+        const map_id = dataQuery.rows[0].id;
+        res.redirect(`../users/maps/${map_id}`);
+      })
+      .catch(err => {
+        res
+          .status(500)
+          .json({ error: err.message });
+      });
+    }
+  });
+
+
+  router.get("/maps/:id", (req, res) => {
+    let user_id = req.session.user_id ? req.session.user_id : null;
+    let map_id = req.params.id;
+    console.log(map_id);
+    let query = ` SELECT maps.*
+                  FROM maps
+                  WHERE maps.id = $1
+                  GROUP BY maps.id;`;
+
+    db.query(query, [map_id]).then(dataQuery => {
+      const maps = dataQuery.rows;
+      res.send(maps);
+    })
+    .catch(err => {
+      res
+        .status(500)
+        .json({ error: err.message });
+    });
+  });
+
 
   return router;
 };
