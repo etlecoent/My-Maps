@@ -13,7 +13,7 @@ module.exports = (db) => {
     // SEND THE DATA FROM THE QUERY
     let query = ` SELECT maps.*
                     FROM maps
-                    WHERE owner_id = $1
+                    WHERE user_id = $1
                     GROUP BY maps.id;`;
 
     db.query(query, [req.session.user_id]).then(dataQuery => {
