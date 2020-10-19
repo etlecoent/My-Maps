@@ -11,7 +11,7 @@ const router  = express.Router();
 // GET Route for Log In at /login
 module.exports = (db) => {
 
-  router.get("/maps", (req, res) => {
+  router.get("/maps/:id", (req, res) => {
 
     let user_id = req.session.user_id ? req.session.user_id : null;
     let templateVars = {
@@ -19,7 +19,7 @@ module.exports = (db) => {
     };
 
     if (user_id) {
-      // Put is name instead of login button && display his maps and favorite maps
+      // Display the user's name instead of login button
       let query = ` SELECT users.name AS user_name
                     FROM users
                     WHERE users.id = $1;`
@@ -36,8 +36,39 @@ module.exports = (db) => {
           .json({ error: err.message });
       });
     } else {
-      // Put a login button and display random maps
-      res.render("../views/maps", templateVars);
+      // Display a login and a register button
+        res.render("../views/maps", templateVars);
+    }
+
+  });
+
+  router.get("/maps", (req, res) => {
+
+    let user_id = req.session.user_id ? req.session.user_id : null;
+    let templateVars = {
+      name : null
+    };
+
+    if (user_id) {
+      // Display the user's name instead of login button && display his maps
+      let query = ` SELECT users.name AS user_name
+                    FROM users
+                    WHERE users.id = $1;`
+
+      db.query(query, [1]).then(dataQuery => {
+
+        templateVars.name = dataQuery.rows[0].user_name;
+
+        res.render("../views/maps", templateVars);
+      })
+      .catch(err => {
+        res
+          .status(500)
+          .json({ error: err.message });
+      });
+    } else {
+      // Display a login and a register button & display all maps
+        res.render("../views/maps", templateVars);
     }
   });
 
