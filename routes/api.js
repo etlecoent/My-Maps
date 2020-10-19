@@ -13,7 +13,7 @@ module.exports = (db) => {
   router.get("/maps/:id", (req, res) => {
     let user_id = req.session.user_id ? req.session.user_id : null;
     let map_id = req.params.id;
-
+    console.log(map_id);
     let query = ` SELECT maps.*
                   FROM maps
                   WHERE maps.id = $1
