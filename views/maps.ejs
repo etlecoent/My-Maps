@@ -15,7 +15,7 @@
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
     integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
     crossorigin=""></script>
-    <script type="text/javascript" src="/scripts/app.js"></script>
+    <script type="text/javascript" src="/scripts/maps.js"></script>
     <script type="text/javascript" src="/scripts/helpers.js"></script>
   </head>
 
@@ -24,14 +24,14 @@
       <div id="logo">LOGO</div>
       <% if(name) {%>
         <span><%= name %></span>
-        <form method="POST" action="../users/logout">
+        <form method="POST" action="/users/logout">
           <button type="submit" id="logoutButton">LOGOUT</button>
         </form>
       <%} else {%>
-        <form method="GET" action="../users/login">
+        <form method="GET" action="/users/login">
           <button type="submit" id="loginButton">LOGIN</button>
         </form>
-        <form method="GET" action="../users/maps">
+        <form method="GET" action="/users/maps">
           <button type="button" id="registerButton">REGISTER</button>
         </form>
       <%}%>
