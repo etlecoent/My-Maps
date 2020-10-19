@@ -14,6 +14,7 @@ module.exports = (db) => {
   router.get("/maps/:id", (req, res) => {
 
     let user_id = req.session.user_id ? req.session.user_id : null;
+    console.log(req.params);
     let templateVars = {
       name : null
     };
@@ -28,7 +29,7 @@ module.exports = (db) => {
 
         templateVars.name = dataQuery.rows[0].user_name;
 
-        res.render("../views/maps", templateVars);
+        res.render("../views/mapViewer", templateVars);
       })
       .catch(err => {
         res
@@ -37,7 +38,7 @@ module.exports = (db) => {
       });
     } else {
       // Display a login and a register button
-        res.render("../views/maps", templateVars);
+        res.render("../views/mapViewer", templateVars);
     }
 
   });
