@@ -1,7 +1,6 @@
 -- Drop and recreate Pins table
 
 DROP TABLE IF EXISTS pins CASCADE;
-
 CREATE TABLE pins (
   id SERIAL PRIMARY KEY NOT NULL,
   title VARCHAR(150),
