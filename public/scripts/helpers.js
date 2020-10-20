@@ -71,8 +71,12 @@ const addUnFavoriteButton = function(mapId) {
 };
 
 // Adds a pin to a map
-const pinsDrawer = function (mapId, title, description, latitude, longitude, img_url) {
+const pinsDrawer = function (mapId, title, description, latitude, longitude, image_url) {
+  let infos = ` <h3>${title}<h3>
+                <article>${description}</article>
+                <img src="${image_url}" width="30em" height="30em">`
 
-  L.marker([latitude, longitude]).addTo(mapsObj[mapId]);
+  L.marker([latitude, longitude]).addTo(mapsObj[mapId])
+      .bindPopup(infos);
 
 };
