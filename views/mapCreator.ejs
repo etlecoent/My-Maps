@@ -20,6 +20,9 @@
   <body>
     <nav>
       <div id="logo">LOGO</div>
+      <form method="GET" action="/users/maps/new">
+        <button type="submit" id="newMapButton">CREATE NEW MAP</button>
+      </form>
       <% if(name) {%>
         <span><%= name %></span>
         <form method="POST" action="/users/logout">
@@ -29,7 +32,7 @@
         <form method="GET" action="/users/login">
           <button type="submit" id="loginButton">LOGIN</button>
         </form>
-        <form method="POST" action="/users/maps">
+        <form method="GET" action="/users/maps">
           <button type="submit" id="registerButton">REGISTER</button>
         </form>
       <%}%>

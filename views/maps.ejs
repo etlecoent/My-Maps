@@ -5,7 +5,7 @@
 
     <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
     <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
-    <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
+    <link rel="stylesheet" href="/styles/maps.css" type="text/css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
    crossorigin=""/>
@@ -22,6 +22,9 @@
   <body>
     <nav>
       <div id="logo">LOGO</div>
+      <form method="GET" action="/users/maps/new">
+        <button type="submit" id="newMapButton">CREATE NEW MAP</button>
+      </form>
       <% if(name) {%>
         <span><%= name %></span>
         <form method="POST" action="/users/logout">
