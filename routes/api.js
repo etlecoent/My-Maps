@@ -136,7 +136,31 @@ module.exports = (db) => {
     });
   });
 
+  router.post("/maps/:id/favorite", (req, res) => {
+    let user_id = req.session.user_id ? req.session.user_id : null;
+    let map_id = req.params.id;
+    if (user_id) {
+      let query = ` UPDATE maps
+                    SET is_favorite = true
+                    WHERE maps.id = $1 AND user_id = $2
+                    RETURNING *`
 
+      db.query(query, [map_id, user_id]).then(dataQuery => {
+
+        res.send(dataQuery);
+      })
+      .catch(err => {
+        res
+          .status(500)
+          .json({ error: err.message });
+      });
+
+    } else {
+      res
+        .status(401)
+        .send("You must be registered or logged in to favorite this map\n").end();
+    }
+  });
 
   return router;
 };
