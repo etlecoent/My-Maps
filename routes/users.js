@@ -36,7 +36,6 @@ module.exports = (db) => {
           .json({ error: err.message });
       });
     } else {
-      // Display a login and a register button & display all maps
       res
         .status(401)
         .send("You must be registered or logged in to see the content of this page\n").end();
@@ -100,8 +99,10 @@ module.exports = (db) => {
           .json({ error: err.message });
       });
     } else {
-      // Display a login and a register button
-        res.render("../views/mapViewer", templateVars);
+      res
+        .status(401)
+        .send("You must be registered or logged in to see the content of this page\n").end();
+
     }
   });
 

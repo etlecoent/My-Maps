@@ -97,6 +97,25 @@ module.exports = (db) => {
     }
   });
 
+  router.get("/pins/maps/:id", (req, res) => {
+    let user_id = req.session.user_id ? req.session.user_id : null;
+    let map_id = req.params.id;
+    let query = ` SELECT pins.*
+                  FROM pins
+                  WHERE map_id = $1
+                  GROUP BY pins.id`
+
+    db.query(query, [map_id]).then(dataQuery => {
+      const pins = dataQuery.rows;
+      res.send(pins);
+    })
+    .catch(err => {
+      res
+        .status(500)
+        .json({ error: err.message });
+    });
+  });
+
   router.get("/maps/:id", (req, res) => {
     let user_id = req.session.user_id ? req.session.user_id : null;
     let map_id = req.params.id;
@@ -117,24 +136,7 @@ module.exports = (db) => {
     });
   });
 
-  router.get("/pins", (req, res) => {
-    let user_id = req.session.user_id ? req.session.user_id : null;
-    let map_id = req.params.id;
 
-    let query = ` SELECT pins.*
-                  FROM pins
-                  GROUP BY pins.id`
-
-    db.query(query).then(dataQuery => {
-      const pins = dataQuery.rows;
-      res.send(pins);
-    })
-    .catch(err => {
-      res
-        .status(500)
-        .json({ error: err.message });
-    });
-  });
 
   return router;
 };
