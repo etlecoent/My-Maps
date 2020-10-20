@@ -49,7 +49,7 @@ const addEditButton = function(mapId) {
 const addFavoriteButton = function(mapId) {
 
   let editButton = `<div>
-                      <form method="POST" action="/users/maps/${mapId}/favorite">
+                      <form method="POST" action="/api/maps/${mapId}/favorite">
                           <button type="submit" id="map${mapId}FavoriteButton" class="favoriteButton">FAVORITE THIS MAP</button>
                       </form>
                     </div>`;
