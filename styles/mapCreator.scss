@@ -1,0 +1,21 @@
+@import 'ressources';
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  padding: 1em;
+  padding-bottom: 20em;
+}
+
+body {
+  background: #252422;
+  color: #fffcf2;
+  margin: 0;
+  height: 100vh;
+  font-family: Helvetica neue, roboto;
+}
+
+main {
+  display: flex;
+  justify-content: center;
+}
