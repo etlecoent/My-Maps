@@ -1,6 +1,31 @@
-const mapDrawer = function(mapId, titleString, latLongArr) {
+const mapDrawerPlusButton = function(mapId, titleString, latLongArr) {
 
-  let newDiv = `<div class="smallMap" id="smallMap${mapId}" style="height: 150px; width: 150px;"></div>`;
+  let newDiv = `<div class="smallMap" id="smallMap${mapId}"></div>`;
+
+  let newMapString = `<script>
+                      var mymap = L.map('smallMap${mapId}').setView([${latLongArr}], 10);
+                      L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+                        maxZoom: 18,
+                        attribution: '${titleString}',
+                        id: 'mapbox/streets-v11',
+                        tileSize: 512,
+                        zoomOffset: -1,
+                        accessToken: 'pk.eyJ1Ijoic29jaWFqbCIsImEiOiJja2dmZm9ubzkxazI5MnpxcWpiNW4zOTJxIn0.I27HxC16sHXVkfz1XrUmFQ'
+                      }).addTo(mymap);
+                      </script>
+                      <div>
+                        <form method="GET" action="/users/maps/${mapId}/edit">
+                           <button type="submit" id="map${mapId}Button">EDIT NEW MAP</button>
+                        </form>
+                      </div>`;
+
+
+  $('.smallMapSection').append(newDiv, newMapString);
+};
+
+const mapDrawerOnly = function(mapId, titleString, latLongArr) {
+
+  let newDiv = `<div class="smallMap" id="smallMap${mapId}"></div>`;
 
   let newMapString = `<script>
                       var mymap = L.map('smallMap${mapId}').setView([${latLongArr}], 10);
