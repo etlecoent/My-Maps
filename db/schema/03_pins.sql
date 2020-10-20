@@ -7,7 +7,8 @@ CREATE TABLE pins (
   description TEXT,
   longitude Decimal(9,6),
   latitude Decimal(8,6),
-  image_url TEXT
+  image_url TEXT,
+  map_id INTEGER REFERENCES maps(id) ON DELETE CASCADE
 );
 
 
