@@ -1,14 +1,6 @@
-const pinsDrawer = function (mpaId, title, description, latitude, longitude, img_url) {
 
-  let newPin = `<script>
-                  var marker = L.marker([${latitude}, ${longitude}]).addTo(mymap);
-                  // add content to the pin (text etc)
-                </script>`
-
-
-};
-
-const addMapDiv = function (mapId) {
+// Creates a div that will hold a map and a button
+const addMapContainer = function (mapId) {
 
   let newDiv = `<div class="smallMapContainer" id="smallMapContainer${mapId}"></div>`
 
@@ -16,35 +8,59 @@ const addMapDiv = function (mapId) {
 
 }
 
-
-
-const mapDrawerOnly = function(mapId, titleString, latLongArr) {
-
+const addMapDiv = function (mapId) {
   let newDiv = `<div class="smallMap" id="smallMap${mapId}"></div>`;
 
-  let newMapString = `<script>
-                      var mymap = L.map('smallMap${mapId}').setView([${latLongArr}], 10);
-                      L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
-                        maxZoom: 18,
-                        attribution: '${titleString}',
-                        id: 'mapbox/streets-v11',
-                        tileSize: 512,
-                        zoomOffset: -1,
-                        accessToken: 'pk.eyJ1Ijoic29jaWFqbCIsImEiOiJja2dmZm9ubzkxazI5MnpxcWpiNW4zOTJxIn0.I27HxC16sHXVkfz1XrUmFQ'
-                      }).addTo(mymap);
-                      </script>`;
+  $(`#smallMapContainer${mapId}`).append(newDiv);
+}
 
-  $(`#smallMapContainer${mapId}`).append(newDiv, newMapString);
+// Draws a map inside a div and add it to the parent div
+const mapDrawer = function(mapId, titleString, latLongArr) {
+
+  const map = L.map(`smallMap${mapId}`).setView(latLongArr, 10);
+
+  L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+    maxZoom: 18,
+    attribution: `${titleString}`,
+    id: 'mapbox/streets-v11',
+    tileSize: 512,
+    zoomOffset: -1,
+    accessToken: 'pk.eyJ1Ijoic29jaWFqbCIsImEiOiJja2dmZm9ubzkxazI5MnpxcWpiNW4zOTJxIn0.I27HxC16sHXVkfz1XrUmFQ'
+  }).addTo(map);
+
+  return map;
+
 };
 
+// Adds an edit button inside a div and add it to the parent div
 const addEditButton = function(mapId) {
 
   let editButton = `<div>
                       <form method="GET" action="/users/maps/${mapId}/edit">
-                          <button type="submit" id="map${mapId}Button">EDIT NEW MAP</button>
+                          <button type="submit" id="map${mapId}EditButton" class="editButton">EDIT MAP</button>
                       </form>
                     </div>`;
 
 
   $(`#smallMapContainer${mapId}`).append(editButton);
+};
+
+// Adds a favorite button inside a div and add it to the parent div
+const addFavoriteButton = function(mapId) {
+
+  let editButton = `<div>
+                      <form method="POST" action="/users/maps/${mapId}/favorite">
+                          <button type="submit" id="map${mapId}FavoriteButton" class="favoriteButton">FAVORITE THIS MAP</button>
+                      </form>
+                    </div>`;
+
+
+  $(`#smallMapContainer${mapId}`).append(editButton);
+};
+
+// Adds a pin to a map
+const pinsDrawer = function (mapId, title, description, latitude, longitude, img_url) {
+
+  L.marker([latitude, longitude]).addTo(mapsObj[mapId]);
+
 };
