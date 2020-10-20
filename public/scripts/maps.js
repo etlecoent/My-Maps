@@ -16,7 +16,11 @@ $(document).ready(() => {
         }
       });
       addEditButton(m.id);
-      addFavoriteButton(m.id);
+      if (m.is_favorite) {
+        addFavoriteButton(m.id);
+      } else {
+        addUnFavoriteButton(m.id);
+      }
     }
   })
 });

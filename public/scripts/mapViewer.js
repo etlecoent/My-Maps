@@ -17,7 +17,12 @@ $(document).ready(() => {
           pinsDrawer(m.id, p.title, p.description, p.latitude, p.longitude, p.img_url)
         }
       });
-      addFavoriteButton(m.id);
+      console.log(m.is_favorite);
+      if (!m.is_favorite) {
+        addFavoriteButton(m.id);
+      } else {
+        addUnFavoriteButton(m.id);
+      }
       // add buttons to modify the map
     }
   });
