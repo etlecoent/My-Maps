@@ -75,12 +75,42 @@ module.exports = (db) => {
   });
 
 
+  router.get("/maps/:id/edit", (req, res) => {
+    let user_id = req.session.user_id ? req.session.user_id : null;
+
+    let templateVars = {
+      name : null,
+    };
+
+    if (user_id) {
+      // Display the user's name instead of login button
+      let query = ` SELECT users.name AS user_name
+                    FROM users
+                    WHERE users.id = $1;`
+
+      db.query(query, [1]).then(dataQuery => {
+
+        templateVars.name = dataQuery.rows[0].user_name;
+
+        res.render("../views/mapViewer", templateVars);
+      })
+      .catch(err => {
+        res
+          .status(500)
+          .json({ error: err.message });
+      });
+    } else {
+      // Display a login and a register button
+        res.render("../views/mapViewer", templateVars);
+    }
+  });
+
   router.get("/maps/:id", (req, res) => {
 
     let user_id = req.session.user_id ? req.session.user_id : null;
-    console.log(req.params);
+
     let templateVars = {
-      name : null
+      name : null,
     };
 
     if (user_id) {

@@ -52,12 +52,13 @@ module.exports = (db) => {
     if (user_id) {
       const {title, location} = req.body;
       const [lat, long] = location.split(', ');
+      const titleTrim = title.trim();
       const latitude = Number(lat);
       const longitude = Number(long);
       const query = ` INSERT INTO maps (title, latitude, longitude, user_id) VALUES ($1, $2, $3, $4)
                       RETURNING *;`
 
-      db.query(query, [title, latitude, longitude, user_id]).then(dataQuery => {
+      db.query(query, [titleTrim, latitude, longitude, user_id]).then(dataQuery => {
 
         const map_id = dataQuery.rows[0].id;
         res.redirect(`../users/maps/${map_id}`);
@@ -70,11 +71,36 @@ module.exports = (db) => {
     }
   });
 
+  router.get("/maps/:id/edit", (req, res) => {
+    let user_id = req.session.user_id ? req.session.user_id : null;
+    let map_id = req.params.id;
+
+    if (user_id) {
+
+      let query = ` SELECT maps.*
+                    FROM maps
+                    WHERE maps.id = $1
+                    GROUP BY maps.id;`;
+
+      db.query(query, [map_id]).then(dataQuery => {
+        const maps = dataQuery.rows;
+        res.send(maps);
+      })
+      .catch(err => {
+        res
+          .status(500)
+          .json({ error: err.message });
+      });
+    } else {
+      // Display a login and a register button
+        // res.render("../views/mapViewer", templateVars);
+    }
+  });
 
   router.get("/maps/:id", (req, res) => {
     let user_id = req.session.user_id ? req.session.user_id : null;
     let map_id = req.params.id;
-    console.log(map_id);
+
     let query = ` SELECT maps.*
                   FROM maps
                   WHERE maps.id = $1
@@ -90,7 +116,6 @@ module.exports = (db) => {
         .json({ error: err.message });
     });
   });
-
 
   return router;
 };
