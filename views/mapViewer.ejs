@@ -42,6 +42,27 @@
     <main>
       <section class="smallMapSection">
       </section>
+      <div id="mapEditButtons">
+        <% if(name) {%>
+          <span>
+            <form method="POST" action="/users/logout">
+              <button type="submit" id="logoutButton">New Pin</button>
+          </span>
+          <span>
+            <form method="POST" action="/users/logout">
+              <button type="submit" id="logoutButton">Edit</button>
+            </span>
+            <span>
+              <form method="POST" action="/users/logout">
+                <button type="submit" id="logoutButton">Reset</button>
+            </span>
+          </form>
+        <%} else {%>
+          <form method="GET" action="/users/login">
+            <button type="submit" id="loginButton">Favourite</button>
+          </form>
+        <%}%>
+      </div>
     </main>
   </body>
 
