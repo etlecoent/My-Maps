@@ -147,7 +147,7 @@ module.exports = (db) => {
 
       db.query(query, [map_id, user_id]).then(dataQuery => {
 
-        res.send(dataQuery);
+        res.redirect(`back`);
       })
       .catch(err => {
         res
@@ -173,7 +173,7 @@ module.exports = (db) => {
 
       db.query(query, [map_id, user_id]).then(dataQuery => {
 
-        res.send(dataQuery);
+        res.redirect(`back`);
       })
       .catch(err => {
         res
