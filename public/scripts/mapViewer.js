@@ -6,7 +6,7 @@ $(document).ready(() => {
   $.get(`${apiURL}`, data => {
   }).then(data => {
     for (let o of data) {
-      mapDrawer(o.id, o.title, [o.latitude, o.longitude]);
+      mapDrawerOnly(o.id, o.title, [o.latitude, o.longitude]);
     }
   });
 });
