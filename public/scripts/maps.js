@@ -22,9 +22,16 @@ $(document).ready(() => {
 
   $.get('/api/maps', data => {
   }).then(data => {
-    console.log(data);
     for (let o of data) {
-      mapDrawerPlusButton(o.id, o.title, [o.latitude, o.longitude]);
+      addMapDiv(o.id);
+      mapDrawerOnly(o.id, o.title, [o.latitude, o.longitude]);
+      addEditButton(o.id);
     }
+  })
+
+  $.get("/api/pins").then( data => {
+    console.log(data);
+    // run function to create pins for each map
   });
+
 });

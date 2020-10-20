@@ -6,6 +6,7 @@ $(document).ready(() => {
   $.get(`${apiURL}`, data => {
   }).then(data => {
     for (let o of data) {
+      addMapDiv(o.id);
       mapDrawerOnly(o.id, o.title, [o.latitude, o.longitude]);
     }
   });
