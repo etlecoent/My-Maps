@@ -117,5 +117,24 @@ module.exports = (db) => {
     });
   });
 
+  router.get("/pins", (req, res) => {
+    let user_id = req.session.user_id ? req.session.user_id : null;
+    let map_id = req.params.id;
+
+    let query = ` SELECT pins.*
+                  FROM pins
+                  GROUP BY pins.id`
+
+    db.query(query).then(dataQuery => {
+      const pins = dataQuery.rows;
+      res.send(pins);
+    })
+    .catch(err => {
+      res
+        .status(500)
+        .json({ error: err.message });
+    });
+  });
+
   return router;
 };
