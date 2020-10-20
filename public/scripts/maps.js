@@ -22,8 +22,9 @@ $(document).ready(() => {
 
   $.get('/api/maps', data => {
   }).then(data => {
+    console.log(data);
     for (let o of data) {
-      mapDrawer(o.id, o.title, [o.latitude, o.longitude]);
+      mapDrawerPlusButton(o.id, o.title, [o.latitude, o.longitude]);
     }
   });
 });
