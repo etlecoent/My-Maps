@@ -48,19 +48,35 @@ const addEditButton = function(mapId) {
 // Adds a favorite button inside a div and add it to the parent div
 const addFavoriteButton = function(mapId) {
 
-  let editButton = `<div>
-                      <form method="POST" action="/users/maps/${mapId}/favorite">
-                          <button type="submit" id="map${mapId}FavoriteButton" class="favoriteButton">Favourite</button>
-                      </form>
-                    </div>`;
+  let favoriteButton = `<div>
+                         <form method="POST" action="/api/maps/${mapId}/favorite">
+                            <button type="submit" id="map${mapId}FavoriteButton" class="favoriteButton">FAVORITE THIS MAP</button>
+                          </form>
+                        </div>`;
 
 
-  $(`#smallMapContainer${mapId}`).append(editButton);
+  $(`#smallMapContainer${mapId}`).append(favoriteButton);
+};
+
+const addUnFavoriteButton = function(mapId) {
+
+  let unFavoriteButton = `<div>
+                            <form method="POST" action="/api/maps/${mapId}/unfavorite">
+                              <button type="submit" id="map${mapId}UnFavoriteButton" class="unfavoriteButton">UNFAVORITE THIS MAP</button>
+                            </form>
+                          </div>`;
+
+
+  $(`#smallMapContainer${mapId}`).append(unFavoriteButton);
 };
 
 // Adds a pin to a map
-const pinsDrawer = function (mapId, title, description, latitude, longitude, img_url) {
+const pinsDrawer = function (mapId, title, description, latitude, longitude, image_url) {
+  let infos = ` <h3>${title}<h3>
+                <article>${description}</article>
+                <img src="${image_url}" width="30em" height="30em">`
 
-  L.marker([latitude, longitude]).addTo(mapsObj[mapId]);
+  L.marker([latitude, longitude]).addTo(mapsObj[mapId])
+      .bindPopup(infos);
 
 };
