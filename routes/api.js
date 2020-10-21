@@ -23,7 +23,7 @@ module.exports = (db) => {
 
       db.query(query, [user_id]).then(dataQuery => {
         const maps = dataQuery.rows;
-        res.send(maps);
+        res.send({maps, user_id});
       })
       .catch(err => {
         res
@@ -37,7 +37,7 @@ module.exports = (db) => {
 
       db.query(query).then(dataQuery => {
         const maps = dataQuery.rows;
-        res.send(maps);
+        res.send({maps, user_id});
       })
       .catch(err => {
         res
@@ -49,12 +49,15 @@ module.exports = (db) => {
 
   router.post('/maps', (req, res) => {
     let user_id = req.session.user_id ? req.session.user_id : null;
+
     if (user_id) {
+
       const {title, location} = req.body;
       const [lat, long] = location.split(', ');
       const titleTrim = title.trim();
       const latitude = Number(lat);
       const longitude = Number(long);
+
       const query = ` INSERT INTO maps (title, latitude, longitude, user_id) VALUES ($1, $2, $3, $4)
                       RETURNING *;`
 
@@ -71,6 +74,7 @@ module.exports = (db) => {
     }
   });
 
+  ///////////// NOT SURE WE NEED THIS ONE IN THE API
   router.get("/maps/:id/edit", (req, res) => {
     let user_id = req.session.user_id ? req.session.user_id : null;
     let map_id = req.params.id;
@@ -84,7 +88,7 @@ module.exports = (db) => {
 
       db.query(query, [map_id]).then(dataQuery => {
         const maps = dataQuery.rows;
-        res.send(maps);
+        res.send({maps, user_id});
       })
       .catch(err => {
         res
@@ -96,6 +100,7 @@ module.exports = (db) => {
         // res.render("../views/mapViewer", templateVars);
     }
   });
+
 
   router.get("/pins/maps/:id", (req, res) => {
     let user_id = req.session.user_id ? req.session.user_id : null;
@@ -116,6 +121,7 @@ module.exports = (db) => {
     });
   });
 
+
   router.get("/maps/:id", (req, res) => {
     let user_id = req.session.user_id ? req.session.user_id : null;
     let map_id = req.params.id;
@@ -127,7 +133,7 @@ module.exports = (db) => {
 
     db.query(query, [map_id]).then(dataQuery => {
       const maps = dataQuery.rows;
-      res.send(maps);
+      res.send({maps, user_id});
     })
     .catch(err => {
       res
@@ -135,6 +141,7 @@ module.exports = (db) => {
         .json({ error: err.message });
     });
   });
+
 
   router.post("/maps/:id/favorite", (req, res) => {
     let user_id = req.session.user_id ? req.session.user_id : null;
@@ -161,6 +168,7 @@ module.exports = (db) => {
         .send("You must be registered or logged in to favorite this map\n").end();
     }
   });
+
 
   router.post("/maps/:id/unfavorite", (req, res) => {
     let user_id = req.session.user_id ? req.session.user_id : null;

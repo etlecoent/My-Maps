@@ -19,7 +19,7 @@ module.exports = (db) => {
     };
 
     if (user_id) {
-      // Display the user's name instead of login button && display his maps
+
       let query = ` SELECT users.name AS user_name
                     FROM users
                     WHERE users.id = $1;`
@@ -106,6 +106,7 @@ module.exports = (db) => {
     }
   });
 
+
   router.get("/maps/:id", (req, res) => {
 
     let user_id = req.session.user_id ? req.session.user_id : null;
@@ -137,6 +138,7 @@ module.exports = (db) => {
     }
 
   });
+
 
   router.get("/login", (req, res) => {
 
