@@ -17,10 +17,10 @@ module.exports = (db) => {
     if (user_id) {
       let query = ` SELECT maps.*
                     FROM maps
-                    WHERE user_id = $1
-                    GROUP BY maps.id;`;
+                    GROUP BY maps.id
+                    ORDER BY is_favorite DESC NULLS LAST, ABS($1 - user_id);`;
 
-
+      console.log(query);
       db.query(query, [user_id]).then(dataQuery => {
         const maps = dataQuery.rows;
         res.send({maps, user_id});
