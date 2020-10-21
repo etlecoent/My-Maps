@@ -1,9 +1,21 @@
 @import 'ressources';
 
 body {
-  background-color: #EEE;
+  display: flex;
+  flex-direction: column;
+  background-color: $erieBlack;
+  background-image: url($bgImage);
+  color: $textLight ;
+  margin: 0;
+  height: 100vh;
+  font-family: Helvetica neue;
 
-  h1 {
-    color: #244751;
+  main {
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
   }
+
 }

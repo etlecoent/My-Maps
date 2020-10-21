@@ -1,22 +1,50 @@
 @import 'ressources';
 
-nav {
-  display: flex;
-  justify-content: space-between;
-  padding: 1em;
-  padding-bottom: 20em;
-}
 
-body {
-  background-color: $erieBlack;
-  background-image: url($bgImage);
-  color: #fffcf2;
-  margin: 0;
-  height: 100vh;
-  font-family: Helvetica neue,
-}
 
-main {
+
+.inputArea {
   display: flex;
+  height: 100%;
+  width: 90%;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
+
+
+  form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    #title {
+      padding: 5em;
+      // width: ;
+    }
+
+    #submit-button {
+      padding: 5em;
+
+      #newMapButton {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 9em;
+        height:4em;
+      }
+
+    }
+
+    input{
+      width: 11em;
+      height: 3.5em;
+
+    }
+
+    .latLong {
+      width: 9em;
+      height: 3em;
+    }
+  }
 }

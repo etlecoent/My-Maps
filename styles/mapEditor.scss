@@ -1,28 +1,5 @@
 @import 'ressources';
 
-nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1em;
-}
-
-body {
-  background-color: $erieBlack;
-  background-image: url($bgImage);
-  color: #fffcf2;
-  margin: 0;
-  height: 100vh;
-  font-family: Helvetica neue, roboto;
-}
-
-main {
-  display: flex;
-  flex-direction: column-reverse;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-}
 
 .smallMapSection {
   display: flex;
