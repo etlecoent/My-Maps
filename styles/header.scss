@@ -5,5 +5,33 @@ nav {
   justify-content: space-between;
   align-items: center;
   padding: 1em;
+  padding-bottom: 5em;
+  flex-wrap: wrap;
 
+  .navButtons {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+  }
+
+  .userName {
+    display: flex;
+  }
+
+  #logoutButton {
+    margin:1em;
+  }
+
+  #newMapButton {
+    margin:1em;
+  }
+
+}
+
+@media only screen and (max-width: 500px) {
+  nav {
+    flex-direction: column;
+    justify-content: center;
+  }
 }

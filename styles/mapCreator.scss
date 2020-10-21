@@ -1,8 +1,5 @@
 @import 'ressources';
 
-
-
-
 .inputArea {
   display: flex;
   height: 100%;
@@ -19,8 +16,14 @@
     align-items: center;
 
     #title {
-      padding: 5em;
-      // width: ;
+      display: flex;
+      padding: 2.5em;
+    }
+
+    #coordinates {
+      display: flex;
+      padding: 2.5em;
+      justify-content: center;
     }
 
     #submit-button {
@@ -36,10 +39,13 @@
 
     }
 
-    input{
-      width: 11em;
-      height: 3.5em;
+    .input-group {
+      // flex-wrap: nowrap;
+    }
 
+    input{
+      width: 12em;
+      height: 3.5em;
     }
 
     .latLong {
