@@ -1,0 +1,16 @@
+<nav>
+  <div id="logo">LOGO</div>
+  <form method="GET" action="/users/maps/new">
+    <button type="submit" id="newMapButton">Create New Map</button>
+  </form>
+  <% if(name) {%>
+    <span><%= name %></span>
+    <form method="POST" action="/users/logout">
+      <button type="submit" id="logoutButton">Logout</button>
+    </form>
+  <%} else {%>
+    <form method="GET" action="/users/login">
+      <button type="submit" id="loginButton">Login</button>
+    </form>
+  <%}%>
+</nav>

@@ -5,12 +5,11 @@
  * See: https://expressjs.com/en/guide/using-middleware.html#middleware.router
  */
 
+const { query } = require('express');
 const express = require('express');
 const router  = express.Router();
 
 module.exports = (db) => {
-
-
   router.get("/maps", (req, res) => {
     let user_id = req.session.user_id ? req.session.user_id : null;
 
@@ -19,7 +18,6 @@ module.exports = (db) => {
                     FROM maps
                     WHERE user_id = $1
                     GROUP BY maps.id;`;
-
 
       db.query(query, [user_id]).then(dataQuery => {
         const maps = dataQuery.rows;
@@ -97,6 +95,7 @@ module.exports = (db) => {
     }
   });
 
+
   router.get("/pins/maps/:id", (req, res) => {
     let user_id = req.session.user_id ? req.session.user_id : null;
     let map_id = req.params.id;
@@ -115,6 +114,19 @@ module.exports = (db) => {
         .json({ error: err.message });
     });
   });
+  router.post("/pins/maps/:id/delete", (req,res) => {
+    let user_id = req.session.user_id ? req.session.user_id : null;
+    let map_id = req.body.id;
+    if(user_id) {
+      let query1 = ` DELETE FROM pins
+                    WHERE map_id = $1;
+                   `
+      db.query(query, [map_id]).then(dataQuery => {
+        // maps = dataQuery.rows;
+        // res.send(maps)
+      })
+    }
+   })
 
   router.get("/maps/:id", (req, res) => {
     let user_id = req.session.user_id ? req.session.user_id : null;

@@ -18,48 +18,20 @@
     <script type="text/javascript" src="/scripts/mapViewer.js"></script>
     <script type="text/javascript" src="/scripts/helpers.js"></script>
   </head>
-
+  <header><%- include('partials/_header') %></header>
   <body>
-    <nav>
-      <div id="logo">LOGO</div>
-      <form method="GET" action="/users/maps/new">
-        <button type="submit" id="newMapButton">CREATE NEW MAP</button>
-      </form>
-      <% if(name) {%>
-        <span><%= name %></span>
-        <form method="POST" action="/users/logout">
-          <button type="submit" id="logoutButton">LOGOUT</button>
-        </form>
-      <%} else {%>
-        <form method="GET" action="/users/login">
-          <button type="submit" id="loginButton">LOGIN</button>
-        </form>
-        <form method="GET" action="/users/maps">
-          <button type="submit" id="registerButton">REGISTER</button>
-        </form>
-      <%}%>
-    </nav>
+
     <main>
       <section class="smallMapSection">
       </section>
       <div id="mapEditButtons">
         <% if(name) {%>
-          <span>
-            <form method="POST" action="/users/logout">
-              <button type="submit" id="logoutButton">New Pin</button>
-          </span>
-          <span>
-            <form method="POST" action="/users/logout">
-              <button type="submit" id="logoutButton">Edit</button>
-            </span>
-            <span>
-              <form method="POST" action="/users/logout">
-                <button type="submit" id="logoutButton">Reset</button>
-            </span>
+            <form method="POST" action="/users/maps/1/edit"></form>
+              <button type="submit">Delete</button>
           </form>
         <%} else {%>
           <form method="GET" action="/users/login">
-            <button type="submit" id="loginButton">Favourite</button>
+            <button type="submit" id="favouriteButton">Favourite</button>
           </form>
         <%}%>
       </div>

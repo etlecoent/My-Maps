@@ -16,27 +16,8 @@
     integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
     crossorigin=""></script>
   </head>
-
+  <header><%- include('partials/_header') %></header>
   <body>
-    <nav>
-      <div id="logo">LOGO</div>
-      <form method="GET" action="/users/maps/new">
-        <button type="submit" id="newMapButton">CREATE NEW MAP</button>
-      </form>
-      <% if(name) {%>
-        <span><%= name %></span>
-        <form method="POST" action="/users/logout">
-          <button type="submit" id="logoutButton">LOGOUT</button>
-        </form>
-      <%} else {%>
-        <form method="GET" action="/users/login">
-          <button type="submit" id="loginButton">LOGIN</button>
-        </form>
-        <form method="GET" action="/users/maps">
-          <button type="submit" id="registerButton">REGISTER</button>
-        </form>
-      <%}%>
-    </nav>
     <main>
       <form method="POST" action="/api/maps">
         <input id="newMapTitle" placeholder="Please enter a title" name="title">
