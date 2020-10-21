@@ -52,8 +52,7 @@ module.exports = (db) => {
 
     if (user_id) {
 
-      const {title, location} = req.body;
-      const [lat, long] = location.split(', ');
+      const {title, latitude:lat, longitude:long} = req.body;
       const titleTrim = title.trim();
       const latitude = Number(lat);
       const longitude = Number(long);
