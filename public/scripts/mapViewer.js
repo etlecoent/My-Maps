@@ -5,7 +5,8 @@ const mapsObj = {};
 
 $(document).ready(() => {
 
-  $.get(`${apiURL}`).then(mapData => {
+  $.get(`${apiURL}`).then(({maps:mapData, user_id}) => {
+
     for (let m of mapData) {
       addMapContainer(m.id);
       addMapDiv(m.id);
@@ -17,11 +18,13 @@ $(document).ready(() => {
           pinsDrawer(m.id, p.title, p.description, p.latitude, p.longitude, p.image_url)
         }
       });
-      console.log(m.is_favorite);
-      if (!m.is_favorite) {
-        addFavoriteButton(m.id);
-      } else {
-        addUnFavoriteButton(m.id);
+      if(user_id) {
+        addEditButton(m.id);
+        if (!m.is_favorite) {
+          addFavoriteButton(m.id);
+        } else {
+          addUnFavoriteButton(m.id);
+        }
       }
       // add buttons to modify the map
     }
