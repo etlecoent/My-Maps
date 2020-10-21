@@ -20,6 +20,7 @@ $(document).ready(() => {
       });
       // If the user is logged in, add those buttons
       if(user_id) {
+        addButtonsDiv(m.id);
         addEditButton(m.id);
         if (!m.is_favorite) {
           addFavoriteButton(m.id);
