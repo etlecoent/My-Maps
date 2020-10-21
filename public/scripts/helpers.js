@@ -37,7 +37,7 @@ const addEditButton = function(mapId) {
 
   let editButton = `<div>
                       <form method="GET" action="/users/maps/${mapId}/edit">
-                          <button type="submit" id="map${mapId}EditButton" class="editButton">Edit</button>
+                          <button type="submit" id="map${mapId}EditButton" class="editButton btn btn-primary">Edit</button>
                       </form>
                     </div>`;
 
@@ -50,7 +50,7 @@ const addFavoriteButton = function(mapId) {
 
   let favoriteButton = `<div>
                          <form method="POST" action="/api/maps/${mapId}/favorite">
-                            <button type="submit" id="map${mapId}FavoriteButton" class="favoriteButton">FAVORITE THIS MAP</button>
+                            <button type="submit" id="map${mapId}FavoriteButton" class="favoriteButton btn btn-outline-warning">FAVORITE THIS MAP</button>
                           </form>
                         </div>`;
 
@@ -62,7 +62,7 @@ const addUnFavoriteButton = function(mapId) {
 
   let unFavoriteButton = `<div>
                             <form method="POST" action="/api/maps/${mapId}/unfavorite">
-                              <button type="submit" id="map${mapId}UnFavoriteButton" class="unfavoriteButton">UNFAVORITE THIS MAP</button>
+                              <button type="submit" id="map${mapId}UnFavoriteButton" class="unfavoriteButton btn btn-warning">UNFAVORITE THIS MAP</button>
                             </form>
                           </div>`;
 
