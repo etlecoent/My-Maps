@@ -3,7 +3,6 @@
 const addMapContainer = function (mapId) {
 
   let newDiv = `<div class="smallMapContainer" id="smallMapContainer${mapId}"></div>`
-
   $('.smallMapSection').append(newDiv);
 
 }
@@ -16,7 +15,6 @@ const addMapDiv = function (mapId) {
 
 // Draws a map inside a div and add it to the parent div
 const mapDrawer = function(mapId, titleString, latLongArr) {
-
   const map = L.map(`smallMap${mapId}`).setView(latLongArr, 10);
 
   L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
@@ -59,14 +57,11 @@ const addFavoriteButton = function(mapId) {
 };
 
 const addUnFavoriteButton = function(mapId) {
-
   let unFavoriteButton = `<div>
                             <form method="POST" action="/api/maps/${mapId}/unfavorite">
                               <button type="submit" id="map${mapId}UnFavoriteButton" class="unfavoriteButton">UNFAVORITE THIS MAP</button>
                             </form>
                           </div>`;
-
-
   $(`#smallMapContainer${mapId}`).append(unFavoriteButton);
 };
 
@@ -80,3 +75,4 @@ const pinsDrawer = function (mapId, title, description, latitude, longitude, ima
       .bindPopup(infos);
 
 };
+

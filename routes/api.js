@@ -117,18 +117,25 @@ module.exports = (db) => {
         .json({ error: err.message });
     });
   });
-  router.post("/pins/maps/:id/delete", (req,res) => {
-    let user_id = req.session.user_id ? req.session.user_id : null;
-    let map_id = req.body.id;
-    if(user_id) {
-      let query1 = ` DELETE FROM pins
-                    WHERE map_id = $1;
-                   `
-      db.query(query, [map_id]).then(dataQuery => {
-        // maps = dataQuery.rows;
-        // res.send(maps)
+  //This is route for deleting pin on a map
+  //need mapID? if not we can remove it /pins/:id/delete
+  //will request come from ajax?
+  router.delete("/maps/:mapId/pins/:id", (req,res) => {
+    console.log("delete pin!")
+    let userId = req.session.user_id ? req.session.user_id : null;
+    let pinId = req.params.id;
+    let mapId = req.params.mapId;
+    // if(userId) {
+      let query = `DELETE FROM pins
+                  WHERE pins.id = $1;`
+      db.query(query, [pinId]).then(dataQuery => {
+        console.log("response")
+        console.log(dataQuery.rows)
+        res.send({message:`pin${pinId} deleted`})
+      }).catch(err => {
+        console.log(err)
       })
-    }
+    // }
    })
 
 

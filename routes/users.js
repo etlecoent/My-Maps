@@ -42,7 +42,6 @@ module.exports = (db) => {
     }
   });
 
-
   router.get("/maps", (req, res) => {
 
     let user_id = req.session.user_id ? req.session.user_id : null;
@@ -105,8 +104,6 @@ module.exports = (db) => {
 
     }
   });
-
-
   router.get("/maps/:id", (req, res) => {
 
     let user_id = req.session.user_id ? req.session.user_id : null;
