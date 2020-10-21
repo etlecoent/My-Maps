@@ -3,6 +3,7 @@
 nav {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   padding: 1em;
 }
 
@@ -31,8 +32,8 @@ main {
   flex-wrap: wrap;
 
   .smallMap {
-    height: 20em;
-    width: 20em;
+    height: 30em;
+    width: 40em;
   }
 
 }

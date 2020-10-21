@@ -3,8 +3,8 @@
 nav {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   padding: 1em;
-  padding-bottom: 20em;
 }
 
 body {
@@ -18,19 +18,24 @@ body {
 
 main {
   display: flex;
+  flex-direction: column-reverse;
   justify-content: center;
+  align-items: center;
+  height: 100%;
 }
 
 .smallMapSection {
   display: flex;
   width: 90%;
-  flex-direction: row;
+  height: 100%;
+  flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
 
   .smallMap {
-    height: 20em;
-    width: 20em;
+    height: 70em;
+    width: 100em;
   }
 
 }
+
