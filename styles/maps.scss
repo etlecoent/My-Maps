@@ -3,6 +3,7 @@
 nav {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   padding: 1em;
 }
 
@@ -31,9 +32,31 @@ main {
   flex-wrap: wrap;
 
   .smallMap {
-    height: 20em;
-    width: 20em;
+    height: 30em;
+    width: 40em;
   }
 
+}#smallMapContainer {
+  border: 20 px solid white;
+}
+.navButtons {
+  display : flex;
+  flex-direction:column;
+  margin: 0%;
+  padding: 0%;
+  align-items: center;
+}
+
+#logoLink {
+  font-size: larger;
+}
+#logoutButton {
+  margin-left: 2em;
+}
+.smallMapContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 2em;
 }
 

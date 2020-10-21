@@ -19,7 +19,7 @@ module.exports = (db) => {
     };
 
     if (user_id) {
-      // Display the user's name instead of login button && display his maps
+
       let query = ` SELECT users.name AS user_name
                     FROM users
                     WHERE users.id = $1;`
@@ -91,7 +91,7 @@ module.exports = (db) => {
 
         templateVars.name = dataQuery.rows[0].user_name;
 
-        res.render("../views/mapViewer", templateVars);
+        res.render("../views/mapEditor", templateVars);
       })
       .catch(err => {
         res
@@ -105,6 +105,7 @@ module.exports = (db) => {
 
     }
   });
+
 
   router.get("/maps/:id", (req, res) => {
 
@@ -137,6 +138,7 @@ module.exports = (db) => {
     }
 
   });
+
 
   router.get("/login", (req, res) => {
 

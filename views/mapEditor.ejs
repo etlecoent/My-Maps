@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>View Map</title>
+    <title>Maps Editor</title>
     <!--Links-->
     <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
     <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
-    <link rel="stylesheet" href="/styles/mapViewer.css" type="text/css" />
+    <link rel="stylesheet" href="/styles/mapEditor.css" type="text/css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
    crossorigin=""/>
@@ -14,28 +14,32 @@
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
     integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
     crossorigin=""></script>
-    <script type="text/javascript" src="/scripts/mapViewer.js"></script>
+    <script type="text/javascript" src="/scripts/mapEditor.js"></script>
     <script type="text/javascript" src="/scripts/helpers.js"></script>
   </head>
-  <header><%- include('partials/_header') %></header>
+
   <body>
+    <header><%- include('partials/_header') %></header>
     <main>
       <section class="smallMapSection">
       </section>
       <div id="mapEditButtons">
         <% if(name) {%>
-            <form method="POST" action="/users/maps/1/edit"></form>
-              <button type="submit">Delete</button>
-          </form>
-        <%} else {%>
-          <form method="GET" action="/users/login">
-            <button type="submit" id="favouriteButton">Favourite</button>
+          <span>
+            <form method="POST" action="/pins/maps/:id">
+              <button type="submit" id="logoutButton">New Pin</button>
+          </span>
+          <span>
+            <form method="POST" action="/users/logout">
+              <button type="submit" id="logoutButton">Edit</button>
+            </span>
+            <span>
+              <form method="POST" action="/users/logout">
+                <button type="submit" id="logoutButton">Reset</button>
+            </span>
           </form>
         <%}%>
       </div>
-    <main>
-      <section class="smallMapSection">
-      </section>
     </main>
   </body>
 

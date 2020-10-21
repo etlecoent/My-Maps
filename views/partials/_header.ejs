@@ -1,16 +1,25 @@
 <nav>
-  <div id="logo">LOGO</div>
-  <form method="GET" action="/users/maps/new">
-    <button type="submit" id="newMapButton">Create New Map</button>
+  <div class="navButtons">
+    <a class="btn btn-link" id="logoLink" href="/users/maps" role="button"><img src="/imgs/logo.png" alt="Logo"/></a>
+    <form method="GET" action="/users/maps/new">
+    <button type="submit" id="newMapButton">CREATE NEW MAP</button>
   </form>
+</div>
+<div class="navButtons">
   <% if(name) {%>
     <span><%= name %></span>
     <form method="POST" action="/users/logout">
-      <button type="submit" id="logoutButton">Logout</button>
+      <button type="submit" id="logoutButton">LOGOUT</button>
     </form>
   <%} else {%>
     <form method="GET" action="/users/login">
-      <button type="submit" id="loginButton">Login</button>
+      <button type="submit" id="loginButton">LOGIN</button>
     </form>
+  </div>
+    <!-- <form method="GET" action="/users/maps">
+      <button type="submit" id="registerButton">REGISTER</button>
+    </form> -->
   <%}%>
 </nav>
+
+
