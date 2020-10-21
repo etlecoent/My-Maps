@@ -1,5 +1,5 @@
 
-# Wiki-Map : MyMaps
+# MyMaps
 
 A web app project for LHL Bootcamp. MyMaps allows authenticated users to create custom maps and group any points of interest "pins" they desire. 
 
