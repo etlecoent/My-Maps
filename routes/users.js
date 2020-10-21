@@ -91,7 +91,7 @@ module.exports = (db) => {
 
         templateVars.name = dataQuery.rows[0].user_name;
 
-        res.render("../views/mapViewer", templateVars);
+        res.render("../views/mapEditor", templateVars);
       })
       .catch(err => {
         res
