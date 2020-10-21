@@ -18,6 +18,7 @@ $(document).ready(() => {
           pinsDrawer(m.id, p.title, p.description, p.latitude, p.longitude, p.image_url)
         }
       });
+      // If the user is logged in, add those buttons
       if(user_id) {
         addEditButton(m.id);
         if (!m.is_favorite) {
@@ -26,7 +27,6 @@ $(document).ready(() => {
           addUnFavoriteButton(m.id);
         }
       }
-      // add buttons to modify the map
     }
   });
 });
