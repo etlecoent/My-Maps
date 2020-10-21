@@ -5,9 +5,15 @@
     <button type="submit" id="newMapButton" class="btn btn-outline-success">CREATE NEW MAP</button>
   </form>
 </div>
+
+<div class="userName">
+  <h1>
+    <strong><%= name %></strong>
+  </h1>
+</div>
+
 <div class="navButtons">
   <% if(name) {%>
-    <span><%= name %></span>
     <form method="POST" action="/users/logout">
       <button type="submit" id="logoutButton" class="btn btn-outline-danger">LOGOUT</button>
     </form>
