@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Maps</title>
+
+    <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
+    <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
+    <link rel="stylesheet" href="/styles/mapEditor.css" type="text/css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+   integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+   crossorigin=""/>
+
+    <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
+
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+    crossorigin=""></script>
+    <script type="text/javascript" src="/scripts/mapEditor.js"></script>
+    <script type="text/javascript" src="/scripts/helpers.js"></script>
+  </head>
+
+  <body>
+    <nav>
+      <div>
+        <img src="/imgs/logo.png" alt="Logo"/>
+      </div>
+      <form method="GET" action="/users/maps/new">
+        <button type="submit" id="newMapButton">CREATE NEW MAP</button>
+      </form>
+      <% if(name) {%>
+        <span><%= name %></span>
+        <form method="POST" action="/users/logout">
+          <button type="submit" id="logoutButton">LOGOUT</button>
+        </form>
+      <%} else {%>
+        <form method="GET" action="/users/login">
+          <button type="submit" id="loginButton">LOGIN</button>
+        </form>
+        <form method="GET" action="/users/maps">
+          <button type="submit" id="registerButton">REGISTER</button>
+        </form>
+      <%}%>
+    </nav>
+    <main>
+      <section class="smallMapSection">
+      </section>
+      <div id="mapEditButtons">
+        <% if(name) {%>
+          <span>
+            <form method="POST" action="/pins/maps/:id">
+              <button type="submit" id="logoutButton">New Pin</button>
+          </span>
+          <span>
+            <form method="POST" action="/users/logout">
+              <button type="submit" id="logoutButton">Edit</button>
+            </span>
+            <span>
+              <form method="POST" action="/users/logout">
+                <button type="submit" id="logoutButton">Reset</button>
+            </span>
+          </form>
+        <%}%>
+      </div>
+    </main>
+  </body>
+
+</html>
+
+<!--// attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
+//   '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+//   'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',-->
+
+
