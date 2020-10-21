@@ -8,11 +8,12 @@ nav {
 }
 
 body {
-  background: #252422;
+  background-color: $erieBlack;
+  background-image: url($bgImage);
   color: #fffcf2;
   margin: 0;
   height: 100vh;
-  font-family: Helvetica neue, roboto;
+  font-family: Helvetica neue,
 }
 
 main {
