@@ -32,29 +32,24 @@
     <main>
       <section class="inputArea">
 
-        <!-- <form method="POST" action="/api/maps">
-          <input id="newMapTitle" placeholder="Please enter a title" name="title">
-          <input id="newMapLocation" placeholder="Please enter location like so: 'latitude, longitude'" name="location">
-          <button type="submit" id="newMapButton">SUBMIT</button>
-        </form> -->
-
         <form method="POST" action="/api/maps">
-          <div class="input-group-prepend">
+
+          <div id="title" class="input-group-prepend">
             <div class="input-group">
               <span class="input-group-text">Title</span>
             </div>
-            <input name="title" placeholder="Please enter a title" class="form-control"></input>
+            <input name="title" placeholder="Please enter a title"></input>
           </div>
 
           <div class="input-group">
             <div class="input-group-prepend">
-              <span class="input-group-text">Latitude, Longitude</span>
+              <span id="inputGroup-sizing-lg" class="input-group-text">Latitude, Longitude</span>
             </div>
-            <input name="latitude" class="form-control">
-            <input name="longitude" class="form-control">
+            <input class="latLong" placeholder="XX.XXXX" name="latitude" class="form-control">
+            <input class="latLong" placeholder="XXX.XXXX" name="longitude" class="form-control">
           </div>
 
-          <div>
+          <div id="submit-button">
             <button type="submit" id="newMapButton" class="btn btn-outline-success">SUBMIT</button>
           </div>
 
