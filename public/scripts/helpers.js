@@ -4,12 +4,10 @@ const addMapContainer = function (mapId) {
 
   let newDiv = `<div class="smallMapContainer" id="smallMapContainer${mapId}"></div>`
   $('.smallMapSection').append(newDiv);
-
 }
 
 const addMapDiv = function (mapId) {
   let newDiv = `<div class="smallMap" id="smallMap${mapId}"></div>`;
-
   $(`#smallMapContainer${mapId}`).append(newDiv);
 }
 
@@ -25,9 +23,7 @@ const mapDrawer = function(mapId, titleString, latLongArr) {
     zoomOffset: -1,
     accessToken: 'pk.eyJ1Ijoic29jaWFqbCIsImEiOiJja2dmZm9ubzkxazI5MnpxcWpiNW4zOTJxIn0.I27HxC16sHXVkfz1XrUmFQ'
   }).addTo(map);
-
   return map;
-
 };
 
 // Adds an edit button inside a div and add it to the parent div
@@ -35,7 +31,7 @@ const addEditButton = function(mapId) {
 
   let editButton = `<div>
                       <form method="GET" action="/users/maps/${mapId}/edit">
-                          <button type="submit" id="map${mapId}EditButton" class="editButton">Edit</button>
+                          <button type="submit" id="map${mapId}EditButton" class="editButton btn btn-primary">Edit</button>
                       </form>
                     </div>`;
 
@@ -48,18 +44,16 @@ const addFavoriteButton = function(mapId) {
 
   let favoriteButton = `<div>
                          <form method="POST" action="/api/maps/${mapId}/favorite">
-                            <button type="submit" id="map${mapId}FavoriteButton" class="favoriteButton">FAVORITE THIS MAP</button>
+                            <button type="submit" id="map${mapId}FavoriteButton" class="favoriteButton btn btn-outline-warning">FAVORITE THIS MAP</button>
                           </form>
                         </div>`;
-
-
   $(`#smallMapContainer${mapId}`).append(favoriteButton);
 };
 
 const addUnFavoriteButton = function(mapId) {
   let unFavoriteButton = `<div>
                             <form method="POST" action="/api/maps/${mapId}/unfavorite">
-                              <button type="submit" id="map${mapId}UnFavoriteButton" class="unfavoriteButton">UNFAVORITE THIS MAP</button>
+                              <button type="submit" id="map${mapId}UnFavoriteButton" class="unfavoriteButton btn btn-warning">UNFAVORITE THIS MAP</button>
                             </form>
                           </div>`;
   $(`#smallMapContainer${mapId}`).append(unFavoriteButton);

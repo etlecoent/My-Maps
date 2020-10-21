@@ -56,7 +56,7 @@ app.use("/api", apiRoutes(db));
 app.get("/", (req, res) => {
   res.render("index");
 });
-
+console.log("hello")
 app.listen(PORT, () => {
   console.log(`Wiki Map app listening on port ${PORT}`);
 });

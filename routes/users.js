@@ -89,6 +89,7 @@ module.exports = (db) => {
       db.query(query, [1]).then(dataQuery => {
 
         templateVars.name = dataQuery.rows[0].user_name;
+        console.log("were here")
 
         res.render("../views/mapEditor", templateVars);
       })

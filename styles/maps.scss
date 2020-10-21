@@ -60,3 +60,22 @@ main {
   margin-bottom: 2em;
 }
 
+.navButtons {
+  display : flex;
+  flex-direction:column;
+  margin: 0%;
+  padding: 0%;
+  align-items: center;
+}
+​
+#logoutButton {
+  margin-left: 2em;
+}
+.smallMapContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 2em;
+}
+
+
