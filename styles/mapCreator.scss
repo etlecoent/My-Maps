@@ -1,16 +1,11 @@
 @import 'ressources';
 
 
-body {
-  background-color: $erieBlack;
-  background-image: url($bgImage);
-  color: #fffcf2;
-  margin: 0;
-  height: 100vh;
-  font-family: Helvetica neue,
-}
 
-main {
+
+.inputArea {
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
 }
