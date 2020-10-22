@@ -44,6 +44,8 @@ $(document).ready(() => {
   });
 });
 
+
+
 // grab markes and send to back end to save
 // find id of map
 // markers table add name of marker, lat, long
