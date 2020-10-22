@@ -16,8 +16,8 @@ module.exports = (db) => {
     if (user_id) {
       let query = ` SELECT maps.*
                     FROM maps
-                    WHERE user_id = $1
-                    GROUP BY maps.id;`;
+                    GROUP BY maps.id
+                    ORDER BY ABS($1 - owner_id) ASC;`;
 
       db.query(query, [user_id]).then(dataQuery => {
         const maps = dataQuery.rows;
@@ -55,7 +55,7 @@ module.exports = (db) => {
       const latitude = Number(lat);
       const longitude = Number(long);
 
-      const query = ` INSERT INTO maps (title, latitude, longitude, user_id) VALUES ($1, $2, $3, $4)
+      const query = ` INSERT INTO maps (title, latitude, longitude, owner_id) VALUES ($1, $2, $3, $4)
                       RETURNING *;`
 
       db.query(query, [titleTrim, latitude, longitude, user_id]).then(dataQuery => {
@@ -117,6 +117,32 @@ module.exports = (db) => {
     });
   });
 
+  router.get("/maps/favoriteMaps", (req, res) => {
+    let user_id = req.session.user_id ? req.session.user_id : null;
+
+    if (user_id) {
+      let query = ` SELECT maps.*
+                    FROM maps
+                    INNER JOIN favoriteMaps ON map_id = maps.id
+                    WHERE user_id = $1;`;
+
+      db.query(query, [user_id]).then(dataQuery => {
+        let favoriteMaps = dataQuery.rows;
+        res.send({favoriteMaps, user_id});
+      })
+      .catch(err => {
+        res
+          .status(500)
+          .json({ error: err.message });
+      });
+
+    } else {
+      let favoriteMaps = [];
+      res.send({favoriteMaps})
+    }
+
+  });
+
   router.delete("/maps/:mapId/pins/:pinId", (req,res) => {
     let userId = req.session.user_id ? req.session.user_id : null;
     let mapId = req.params.mapId;
@@ -125,15 +151,14 @@ module.exports = (db) => {
       let query = `DELETE FROM pins
                   WHERE pins.id = $1;`
       db.query(query, [pinId]).then(dataQuery => {
-        console.log("here!")
-        // res.render(`/maps/:${mapId}/delete`)
-        res.send({message:`pin${pinId} deleted`})
+
+        res.send({message:`pin${pinId} deleted`});
+
       }).catch(err => {
         console.log(err)
       })
     }
    })
-  //  /maps/${mapId}/pins/
 
    router.post("/maps/:id/pins/", (req,res) => {
     let userId = req.session.user_id ? req.session.user_id : null;
@@ -150,7 +175,6 @@ module.exports = (db) => {
     }
 
     Promise.all(queriesArray).then(() => {
-      console.log('success');
       res.send("okay")
     }).catch(err => {
         console.log(err)
@@ -181,13 +205,11 @@ module.exports = (db) => {
   router.post("/maps/:id/favorite", (req, res) => {
     let user_id = req.session.user_id ? req.session.user_id : null;
     let map_id = req.params.id;
-    if (user_id) {
-      let query = ` UPDATE maps
-                    SET is_favorite = true
-                    WHERE maps.id = $1 AND user_id = $2
-                    RETURNING *`
 
-      db.query(query, [map_id, user_id]).then(dataQuery => {
+    if (user_id) {
+      let query = ` INSERT INTO favoriteMaps (user_id, map_id) VALUES ($1, $2);`
+
+      db.query(query, [user_id, map_id]).then(dataQuery => {
 
         res.redirect(`back`);
       })
@@ -208,10 +230,10 @@ module.exports = (db) => {
     let user_id = req.session.user_id ? req.session.user_id : null;
     let map_id = req.params.id;
     if (user_id) {
-      let query = ` UPDATE maps
-                    SET is_favorite = false
-                    WHERE maps.id = $1 AND user_id = $2
-                    RETURNING *`
+      let query = ` DELETE
+                    FROM favoriteMaps
+                    WHERE map_id = $1 AND user_id = $2
+                    RETURNING *;`
 
       db.query(query, [map_id, user_id]).then(dataQuery => {
 
@@ -229,5 +251,83 @@ module.exports = (db) => {
         .send("You must be registered or logged in to unfavorite this map\n").end();
     }
   });
+
+
+  router.get('/maps/:id/favoriteMaps', (req, res) => {
+    let user_id = req.session.user_id ? req.session.user_id : null;
+    let map_id = req.params.id;
+
+    if (user_id) {
+      let query = ` SELECT *
+                    FROM favoriteMaps
+                    WHERE map_id = $1 AND user_id = $2;`
+
+      db.query(query, [map_id, user_id]).then(dataQuery => {
+        let favoriteMaps = dataQuery.rows;
+        res.send({favoriteMaps, user_id});
+      })
+      .catch(err => {
+        res
+          .status(500)
+          .json({ error: err.message });
+      });
+
+    } else {
+      res
+        .status(401)
+        .send("You must be registered or logged in to have favorite maps\n").end();
+    }
+  });
+
+  router.get("/maps/:id/contributions", (req, res) => {
+    let user_id = req.session.user_id ? req.session.user_id : null;
+    let map_id = req.params.id;
+
+    if (user_id) {
+      let query = ` SELECT contributions.*
+                    FROM contributions
+                    WHERE map_id = $1 AND user_id = $2;`
+
+      db.query(query, [map_id, user_id]).then(dataQuery => {
+        let contributions = dataQuery.rows;
+        res.send({contributions, user_id});
+      })
+      .catch(err => {
+        res
+          .status(500)
+          .json({ error: err.message });
+      });
+
+    } else {
+      res
+        .status(401)
+        .send("You must be registered or logged in to have contributions\n").end();
+    }
+  });
+
+  router.post("/maps/:id/contributions", (req, res) => {
+    let user_id = req.session.user_id ? req.session.user_id : null;
+    let map_id = req.params.id;
+
+    if (user_id) {
+      let query = `INSERT INTO contributions (user_id, map_id) VALUES ($1, $2)`;
+
+      db.query(query, [user_id, map_id]).then(dataQuery => {
+        let contributions = dataQuery.rows;
+        res.send("Contributed!");
+      })
+      .catch(err => {
+        res
+          .status(500)
+          .json({ error: err.message });
+      });
+
+    } else {
+      res
+        .status(401)
+        .send("You must be registered or logged in to have contributions\n").end();
+    }
+  });
+
   return router;
 };

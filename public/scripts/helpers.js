@@ -49,7 +49,7 @@ const addFavoriteButton = function(mapId) {
 
   let favoriteButton = `<div class="editFavoriteUnfavoriteButton">
                          <form method="POST" action="/api/maps/${mapId}/favorite">
-                            <button type="submit" id="map${mapId}FavoriteButton" class="favoriteButton btn btn-outline-warning">FAVORITE  </button>
+                            <button type="submit" id="map${mapId}FavoriteButton" class="favoriteButton btn btn-outline-warning">FAVORITE</button>
                           </form>
                         </div>`;
 
@@ -61,7 +61,7 @@ const addUnFavoriteButton = function(mapId) {
 
   let unFavoriteButton = `<div class="editFavoriteUnfavoriteButton">
                             <form method="POST" action="/api/maps/${mapId}/unfavorite">
-                              <button type="submit" id="map${mapId}UnFavoriteButton" class="unfavoriteButton btn btn-warning">UNFAVORITE THIS MAP</button>
+                              <button type="submit" id="map${mapId}UnFavoriteButton" class="unfavoriteButton btn btn-warning">UNFAVORITE</button>
                             </form>
                           </div>`;
 
@@ -69,7 +69,18 @@ const addUnFavoriteButton = function(mapId) {
   $(`#buttonsMap${mapId}`).append(unFavoriteButton);
 };
 
-// Adds a pin to a map
+const addContributorIcon = function(mapId) {
+
+  let contributorIcon = `<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-award-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <path d="M8 0l1.669.864 1.858.282.842 1.68 1.337 1.32L13.4 6l.306 1.854-1.337 1.32-.842 1.68-1.858.282L8 12l-1.669-.864-1.858-.282-.842-1.68-1.337-1.32L2.6 6l-.306-1.854 1.337-1.32.842-1.68L6.331.864 8 0z"/>
+  <path d="M4 11.794V16l4-1 4 1v-4.206l-2.018.306L8 13.126 6.018 12.1 4 11.794z"/>
+  </svg>`;
+
+
+  $(`#buttonsMap${mapId}`).append(contributorIcon);
+};
+
+// Adds a pin to the map with a popUp windows that displays informations on the pin
 const pinsDrawer = function (mapId, title, description, latitude, longitude, image_url) {
 
   let infos = `<h3>${title}<h3>
@@ -81,6 +92,7 @@ const pinsDrawer = function (mapId, title, description, latitude, longitude, ima
 
 };
 
+// Adds a pin to the map with a popUp windows that enables the user to delete the pin
 const pinsDrawerEditor = function (mapId, title, description, latitude, longitude, image_url, pinId) {
   let infos = `
                   <form id="${pinId}" data-mapId="${mapId}">

@@ -48,8 +48,15 @@ $(document).ready(() => {
           method: "POST",
           url: `${window.location.origin}/api/maps/${id}/pins/`,
           data: {markers}
-        });
-        window.location.replace(`/users/maps/${id}/edit`);
+        }).then(() => {
+          $.ajax({
+            method: "POST",
+            url: `${window.location.origin}/api/maps/${id}/contributions/`,
+            data: {user_id}
+          }).then(() => {
+            window.location.replace(`/users/maps/${id}/edit`);
+          })
+        })
       })
     });
   });
@@ -64,7 +71,14 @@ $(document).ready(() => {
       method: "DELETE",
       url: `${window.location.origin}/api/maps/${mapId}/pins/${pinId}`,
       data: {markers}
-    });
-    window.location.replace(`/users/maps/${mapId}/edit`);
+    }).then((data) => {
+      console.log(data);
+      $.ajax({
+        method: "POST",
+        url: `${window.location.origin}/api/maps/${mapId}/contributions/`
+      }).then(() => {
+        window.location.replace(`/users/maps/${mapId}/edit`);
+      })
+    })
   })
 })

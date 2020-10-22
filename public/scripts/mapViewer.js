@@ -18,11 +18,23 @@ $(document).ready(() => {
       if(user_id) {
         addButtonsDiv(m.id);
         addEditButton(m.id);
-        if (!m.is_favorite) {
-          addFavoriteButton(m.id);
-        } else {
-          addUnFavoriteButton(m.id);
-        }
+
+        // Ajax query to get FavoriteMaps and check if the m (current map) is favorite
+        $.get(`/api/maps/${m.id}/favoriteMaps/`).then (({favoriteMaps}) => {
+
+          if (favoriteMaps.length) {
+            addUnFavoriteButton(m.id);
+          } else {
+            addFavoriteButton(m.id);
+          }
+
+          // Ajax query to get contributions of the user on this map and checks if the user as contributed
+          $.get(`/api/maps/${m.id}/contributions`).then (({contributions}) => {
+            if (contributions.length) {
+              addContributorIcon(m.id);
+            }
+          });
+        });
       }
     }
   });

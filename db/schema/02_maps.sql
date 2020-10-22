@@ -7,6 +7,5 @@ CREATE TABLE maps (
   title VARCHAR(150) NOT NULL,
   longitude Decimal(9,6),
   latitude Decimal(8,6),
-  user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
-  is_favorite BOOLEAN DEFAULT FALSE
+  owner_id INTEGER REFERENCES users(id) ON DELETE CASCADE
 );
