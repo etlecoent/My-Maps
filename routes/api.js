@@ -151,9 +151,9 @@ module.exports = (db) => {
       let query = `DELETE FROM pins
                   WHERE pins.id = $1;`
       db.query(query, [pinId]).then(dataQuery => {
-        console.log("here!")
-        // res.render(`/maps/:${mapId}/delete`)
-        res.send({message:`pin${pinId} deleted`})
+
+        res.send({message:`pin${pinId} deleted`});
+
       }).catch(err => {
         console.log(err)
       })
@@ -175,7 +175,6 @@ module.exports = (db) => {
     }
 
     Promise.all(queriesArray).then(() => {
-      console.log('success');
       res.send("okay")
     }).catch(err => {
         console.log(err)
@@ -277,6 +276,56 @@ module.exports = (db) => {
       res
         .status(401)
         .send("You must be registered or logged in to have favorite maps\n").end();
+    }
+  });
+
+  router.get("/maps/:id/contributions", (req, res) => {
+    let user_id = req.session.user_id ? req.session.user_id : null;
+    let map_id = req.params.id;
+
+    if (user_id) {
+      let query = ` SELECT contributions.*
+                    FROM contributions
+                    WHERE map_id = $1 AND user_id = $2;`
+
+      db.query(query, [map_id, user_id]).then(dataQuery => {
+        let contributions = dataQuery.rows;
+        res.send({contributions, user_id});
+      })
+      .catch(err => {
+        res
+          .status(500)
+          .json({ error: err.message });
+      });
+
+    } else {
+      res
+        .status(401)
+        .send("You must be registered or logged in to have contributions\n").end();
+    }
+  });
+
+  router.post("/maps/:id/contributions", (req, res) => {
+    let user_id = req.session.user_id ? req.session.user_id : null;
+    let map_id = req.params.id;
+
+    if (user_id) {
+      let query = `INSERT INTO contributions (user_id, map_id) VALUES ($1, $2)`;
+
+      db.query(query, [user_id, map_id]).then(dataQuery => {
+        let contributions = dataQuery.rows;
+        res.send("Contributed!");
+      })
+      .catch(err => {
+        res
+          .status(500)
+          .json({ error: err.message });
+      });
+
+    } else {
+      res
+        .status(401)
+        .send("You must be registered or logged in to have contributions\n").end();
     }
   });
 
