@@ -17,7 +17,7 @@ module.exports = (db) => {
     if (user_id) {
       let query = ` SELECT maps.*
                     FROM maps
-                      GROUP BY maps.id
+                    GROUP BY maps.id
                     ORDER BY ABS($1 - owner_id) ASC;`;
 
       db.query(query, [user_id]).then(dataQuery => {
@@ -119,6 +119,32 @@ module.exports = (db) => {
     });
   });
 
+  router.get("/maps/favoriteMaps", (req, res) => {
+    let user_id = req.session.user_id ? req.session.user_id : null;
+
+    if (user_id) {
+      let query = ` SELECT maps.*
+                    FROM maps
+                    INNER JOIN favoriteMaps ON map_id = maps.id
+                    WHERE user_id = $1;`;
+
+      db.query(query, [user_id]).then(dataQuery => {
+        let favoriteMaps = dataQuery.rows;
+        res.send({favoriteMaps, user_id});
+      })
+      .catch(err => {
+        res
+          .status(500)
+          .json({ error: err.message });
+      });
+
+    } else {
+      let favoriteMaps = [];
+      res.send({favoriteMaps})
+    }
+
+  });
+
 
   router.get("/maps/:id", (req, res) => {
     let user_id = req.session.user_id ? req.session.user_id : null;
@@ -192,6 +218,7 @@ module.exports = (db) => {
     }
   });
 
+
   router.get('/maps/:id/favoriteMaps', (req, res) => {
     let user_id = req.session.user_id ? req.session.user_id : null;
     let map_id = req.params.id;
@@ -199,7 +226,7 @@ module.exports = (db) => {
     if (user_id) {
       let query = ` SELECT *
                     FROM favoriteMaps
-                    WHERE map_id = $1 AND user_id = $2`
+                    WHERE map_id = $1 AND user_id = $2;`
 
       db.query(query, [map_id, user_id]).then(dataQuery => {
         let favoriteMaps = dataQuery.rows;
