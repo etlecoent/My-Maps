@@ -72,9 +72,9 @@ const addUnFavoriteButton = function(mapId) {
 // Adds a pin to a map
 const pinsDrawer = function (mapId, title, description, latitude, longitude, image_url) {
 
-  let infos = ` <h3>${title}<h3>
-  <article>${description}</article>
-  <img src="${image_url}" width="30em" height="30em">`
+  let infos = `<h3>${title}<h3>
+               <article>${description}</article>
+               <img src="${image_url}" width="30em" height="30em">`
 
   L.marker([latitude, longitude]).addTo(mapsObj[mapId])
       .bindPopup(infos);
@@ -82,14 +82,14 @@ const pinsDrawer = function (mapId, title, description, latitude, longitude, ima
 };
 
 const pinsDrawerEditor = function (mapId, title, description, latitude, longitude, image_url, pinId) {
-  // data-mapId=... mapId
-  let infos = `<form class="deleteForm" id="${pinId}" data-mapId="${mapId}">
-  <h3>${title}</h3>
-  <article>${description}</article>
-  <img src="${image_url}" width="30em" height="30em">
-    <button type="submit">Delete</button>
-  </form>`
-
+  let infos = `
+                  <form id="${pinId}" data-mapId="${mapId}">
+                  <h5>${title}</h5>
+                  <article>${description}</article>
+                  <img id="userInputImage" src="${image_url}" width="30em" height="30em">
+                  <button id="popupDeleteButton" class="btn btn-outline-danger type="submit">Delete</button>
+                  </form>
+                `
 
   L.marker([latitude, longitude]).addTo(mapsObj[mapId])
       .bindPopup(infos);

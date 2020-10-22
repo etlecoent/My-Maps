@@ -19,12 +19,14 @@ $(document).ready(() => {
     });
     mapsObj[id].on("click", function(evt) {
       let marker = L.marker([evt.latlng.lat, evt.latlng.lng]).addTo(mapsObj[id]);
-      marker.bindPopup(`<form class="popupForm" id="${i}">
-      <p>Title: <input type='text' name='marker_title'/></p>
-      <p>Description: <input type='text' name='marker_description'/></p>
-      <p>Image Url: <input type='text' name='marker_image'/></p>
-        <button id="buttonSave" type="submit">Add</button>
-      </form>`).openPopup();
+      marker.bindPopup(`<div class="popupAddForm">
+                        <form id="${i}">
+                        <p>Title: <input type='text' name='marker_title'/></p>
+                        <p>Description: <input type='text' name='marker_description'/></p>
+                        <p>Image Url: <input type='text' name='marker_image'/></p>
+                        <button id="buttonSave" class="btn btn-outline-success type="submit">Add</button>
+                        </form>`).openPopup();
+
 
       $(`#${i}`).on("submit", function(evt) {
         evt.preventDefault()
