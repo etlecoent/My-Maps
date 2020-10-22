@@ -27,6 +27,13 @@ $(document).ready(() => {
           } else {
             addFavoriteButton(m.id);
           }
+
+          // Ajax query to get contributions of the user on this map and checks if the user as contributed
+          $.get(`/api/maps/${m.id}/contributions`).then (({contributions}) => {
+            if (contributions.length) {
+              addContributorIcon(m.id);
+            }
+          });
         });
       }
     }
