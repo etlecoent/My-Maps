@@ -27,6 +27,28 @@
     }
   }
 }
+.leaflet-popup-content {
+  display : flex;
+  align-items: center;
+  justify-content: column;
+
+  width: 20em;
+  // background-color: red;
+  // height : ;
+  overflow-y: scroll;
+}
+// .leaflet-popup-tip {
+//   background-color: aqua;
+// }
+.leaflet-popup-content-wrapper {
+  background-color: blue;
+}
+// .popupForm {
+//   display : flex;
+//   align-items: center;
+//   background-color: red;
+// }
+
 
 
 @media only screen and (min-width: 1000px) {

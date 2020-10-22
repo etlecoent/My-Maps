@@ -2,7 +2,6 @@ const mapsObj = {};
 
 
 $(document).ready(() => {
-
   $.get('/api/maps').then(({maps:mapsData, user_id}) => {
 
     for (let m of mapsData) {
@@ -30,7 +29,5 @@ $(document).ready(() => {
       }
     }
   })
-
-
-
 });
+

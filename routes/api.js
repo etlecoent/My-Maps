@@ -5,22 +5,20 @@
  * See: https://expressjs.com/en/guide/using-middleware.html#middleware.router
  */
 
+const { query } = require('express');
 const express = require('express');
 const router  = express.Router();
 
 module.exports = (db) => {
-
-
   router.get("/maps", (req, res) => {
     let user_id = req.session.user_id ? req.session.user_id : null;
 
     if (user_id) {
       let query = ` SELECT maps.*
                     FROM maps
-                    GROUP BY maps.id
-                    ORDER BY is_favorite DESC NULLS LAST, ABS($1 - user_id);`;
+                    WHERE user_id = $1
+                    GROUP BY maps.id;`;
 
-      console.log(query);
       db.query(query, [user_id]).then(dataQuery => {
         const maps = dataQuery.rows;
         res.send({maps, user_id});
@@ -100,7 +98,6 @@ module.exports = (db) => {
     }
   });
 
-
   router.get("/pins/maps/:id", (req, res) => {
     let user_id = req.session.user_id ? req.session.user_id : null;
     let map_id = req.params.id;
@@ -120,6 +117,45 @@ module.exports = (db) => {
     });
   });
 
+  router.delete("/maps/:mapId/pins/:pinId", (req,res) => {
+    let userId = req.session.user_id ? req.session.user_id : null;
+    let mapId = req.params.mapId;
+    let pinId = req.params.pinId;
+    if(userId) {
+      let query = `DELETE FROM pins
+                  WHERE pins.id = $1;`
+      db.query(query, [pinId]).then(dataQuery => {
+        console.log("here!")
+        // res.render(`/maps/:${mapId}/delete`)
+        res.send({message:`pin${pinId} deleted`})
+      }).catch(err => {
+        console.log(err)
+      })
+    }
+   })
+  //  /maps/${mapId}/pins/
+
+   router.post("/maps/:id/pins/", (req,res) => {
+    let userId = req.session.user_id ? req.session.user_id : null;
+    // let pinId = req.params.id;
+    let id = req.params.id;
+    let queriesArray = [];
+
+    let query = `INSERT INTO pins(title, description, latitude, longitude, map_id, image_url)
+                    VALUES ($1, $2, $3, $4, $5, $6);`
+
+    for (let marker of req.body.markers) {
+      const promise = db.query(query, [marker.title, marker.description, marker.lat, marker.lng, id, marker.image_url]);
+      queriesArray.push(promise);
+    }
+
+    Promise.all(queriesArray).then(() => {
+      console.log('success');
+      res.send("okay")
+    }).catch(err => {
+        console.log(err)
+    })
+  });
 
   router.get("/maps/:id", (req, res) => {
     let user_id = req.session.user_id ? req.session.user_id : null;
@@ -168,7 +204,6 @@ module.exports = (db) => {
     }
   });
 
-
   router.post("/maps/:id/unfavorite", (req, res) => {
     let user_id = req.session.user_id ? req.session.user_id : null;
     let map_id = req.params.id;
@@ -194,6 +229,5 @@ module.exports = (db) => {
         .send("You must be registered or logged in to unfavorite this map\n").end();
     }
   });
-
   return router;
 };

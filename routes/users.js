@@ -42,7 +42,6 @@ module.exports = (db) => {
     }
   });
 
-
   router.get("/maps", (req, res) => {
 
     let user_id = req.session.user_id ? req.session.user_id : null;
@@ -90,7 +89,6 @@ module.exports = (db) => {
       db.query(query, [1]).then(dataQuery => {
 
         templateVars.name = dataQuery.rows[0].user_name;
-
         res.render("../views/mapEditor", templateVars);
       })
       .catch(err => {
@@ -105,8 +103,6 @@ module.exports = (db) => {
 
     }
   });
-
-
   router.get("/maps/:id", (req, res) => {
 
     let user_id = req.session.user_id ? req.session.user_id : null;
@@ -133,7 +129,7 @@ module.exports = (db) => {
           .json({ error: err.message });
       });
     } else {
-      // Display a login and a register button
+      // Display a login button
         res.render("../views/mapViewer", templateVars);
     }
 
