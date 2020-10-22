@@ -2,7 +2,6 @@ const mapsObj = {};
 
 
 $(document).ready(() => {
-
   $.get('/api/maps').then(({maps:mapsData, user_id}) => {
     let sortedMaps = [];
     $.get("/api/maps/favoriteMaps").then(({favoriteMaps}) => {
@@ -57,3 +56,4 @@ $(document).ready(() => {
     });
   })
 });
+

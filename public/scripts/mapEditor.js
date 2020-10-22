@@ -14,15 +14,12 @@ $(document).ready(() => {
     mapsObj[id] = mapDrawer(id, title, [latitude, longitude]);
     $.get(`/api/pins/maps/${id}`).then(pins => {
       for (let p of pins) {
-
-        pinsDrawer(id, p.title, p.description, p.latitude, p.longitude, p.image_url);
-
+        pinsDrawerEditor(id, p.title, p.description, p.latitude, p.longitude, p.image_url, p.id);
       }
     });
-
     mapsObj[id].on("click", function(evt) {
       let marker = L.marker([evt.latlng.lat, evt.latlng.lng]).addTo(mapsObj[id]);
-      marker.bindPopup(`<form id="${i}">
+      marker.bindPopup(`<form class="popupForm" id="${i}">
       <p>Title: <input type='text' name='marker_title'/></p>
       <p>Description: <input type='text' name='marker_description'/></p>
       <p>Image Url: <input type='text' name='marker_image'/></p>
@@ -34,41 +31,38 @@ $(document).ready(() => {
         let markerTemp = {};
 
         markerTemp.title = evt.target.marker_title.value;
-        markerTemp.detail = evt.target.marker_description.value;
+        markerTemp.description = evt.target.marker_description.value;
         markerTemp.image_url = evt.target.marker_image.value;
         markerTemp.lat = marker._latlng.lat
         markerTemp.lng = marker._latlng.lng
         markers.push(markerTemp);
         // Add data to the pins array
         marker.closePopup();
-        console.log(markers);
+      })
+
+      $('#buttonUpdate').submit(function(event) {
+        event.preventDefault();
+        $.ajax({
+          method: "POST",
+          url: `${window.location.origin}/api/maps/${id}/pins/`,
+          data: {markers}
+        });
+        window.location.replace(`/users/maps/${id}/edit`);
       })
     });
-
-
-    // Save button which is gonna send the array of pins to the api
-    // Create save button then reference it in the ajax request below
-
-    $('#buttonUpdate').submit(function(event) {
-      event.preventDefault();
-      console.log('eventTriggered');
-      console.log(markers);
-      $.ajax({
-        method: "POST",
-        url: `${window.location.origin}/api/maps/${id}/pins/`,
-        data: {markers}
-      });
-    })
   });
 
-
-  // Event triggered on button delete click that deletes the marker
-  $('#buttonDelete').on("click", function(event) {
-  //  event.preventDefault();
-      $.ajax({
+  $(`.smallMapSection`).on("submit", ".deleteForm", function(event) {
+    event.preventDefault()
+    console.log("delete clicked!")
+    let pinId = $(this).attr('id');
+    let mapId =  $(this).data('mapid');
+    let markers = mapId;
+    $.ajax({
       method: "DELETE",
-      url: `${window.location.origin}/api/maps/${id}/pins/`,
-      data: selectedPin
+      url: `${window.location.origin}/api/maps/${mapId}/pins/${pinId}`,
+      data: {markers}
     });
+    window.location.replace(`/users/maps/${mapId}/edit`);
   })
 })
