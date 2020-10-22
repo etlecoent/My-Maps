@@ -80,7 +80,7 @@ const addContributorIcon = function(mapId) {
   $(`#buttonsMap${mapId}`).append(contributorIcon);
 };
 
-// Adds a pin to a map
+// Adds a pin to the map with a popUp windows that displays informations on the pin
 const pinsDrawer = function (mapId, title, description, latitude, longitude, image_url) {
 
   let infos = ` <h3>${title}<h3>
@@ -92,6 +92,7 @@ const pinsDrawer = function (mapId, title, description, latitude, longitude, ima
 
 };
 
+// Adds a pin to the map with a popUp windows that enables the user to delete the pin
 const pinsDrawerEditor = function (mapId, title, description, latitude, longitude, image_url, pinId) {
   // data-mapId=... mapId
   let infos = `<form class="deleteForm" id="${pinId}" data-mapId="${mapId}">
