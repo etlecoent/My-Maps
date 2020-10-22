@@ -17,10 +17,9 @@ module.exports = (db) => {
     if (user_id) {
       let query = ` SELECT maps.*
                     FROM maps
-                    GROUP BY maps.id
-                    ORDER BY is_favorite DESC NULLS LAST, ABS($1 - user_id);`;
+                      GROUP BY maps.id
+                    ORDER BY ABS($1 - owner_id) ASC;`;
 
-      console.log(query);
       db.query(query, [user_id]).then(dataQuery => {
         const maps = dataQuery.rows;
         res.send({maps, user_id});
@@ -57,7 +56,7 @@ module.exports = (db) => {
       const latitude = Number(lat);
       const longitude = Number(long);
 
-      const query = ` INSERT INTO maps (title, latitude, longitude, user_id) VALUES ($1, $2, $3, $4)
+      const query = ` INSERT INTO maps (title, latitude, longitude, owner_id) VALUES ($1, $2, $3, $4)
                       RETURNING *;`
 
       db.query(query, [titleTrim, latitude, longitude, user_id]).then(dataQuery => {
@@ -145,13 +144,11 @@ module.exports = (db) => {
   router.post("/maps/:id/favorite", (req, res) => {
     let user_id = req.session.user_id ? req.session.user_id : null;
     let map_id = req.params.id;
-    if (user_id) {
-      let query = ` UPDATE maps
-                    SET is_favorite = true
-                    WHERE maps.id = $1 AND user_id = $2
-                    RETURNING *`
 
-      db.query(query, [map_id, user_id]).then(dataQuery => {
+    if (user_id) {
+      let query = ` INSERT INTO favoriteMaps (user_id, map_id) VALUES ($1, $2);`
+
+      db.query(query, [user_id, map_id]).then(dataQuery => {
 
         res.redirect(`back`);
       })
@@ -173,10 +170,10 @@ module.exports = (db) => {
     let user_id = req.session.user_id ? req.session.user_id : null;
     let map_id = req.params.id;
     if (user_id) {
-      let query = ` UPDATE maps
-                    SET is_favorite = false
-                    WHERE maps.id = $1 AND user_id = $2
-                    RETURNING *`
+      let query = ` DELETE
+                    FROM favoriteMaps
+                    WHERE map_id = $1 AND user_id = $2
+                    RETURNING *;`
 
       db.query(query, [map_id, user_id]).then(dataQuery => {
 
@@ -192,6 +189,32 @@ module.exports = (db) => {
       res
         .status(401)
         .send("You must be registered or logged in to unfavorite this map\n").end();
+    }
+  });
+
+  router.get('/maps/:id/favoriteMaps', (req, res) => {
+    let user_id = req.session.user_id ? req.session.user_id : null;
+    let map_id = req.params.id;
+
+    if (user_id) {
+      let query = ` SELECT *
+                    FROM favoriteMaps
+                    WHERE map_id = $1 AND user_id = $2`
+
+      db.query(query, [map_id, user_id]).then(dataQuery => {
+        let favoriteMaps = dataQuery.rows;
+        res.send({favoriteMaps, user_id});
+      })
+      .catch(err => {
+        res
+          .status(500)
+          .json({ error: err.message });
+      });
+
+    } else {
+      res
+        .status(401)
+        .send("You must be registered or logged in to have favorite maps\n").end();
     }
   });
 
