@@ -1,22 +1,52 @@
 @import 'ressources';
 
-nav {
+.inputArea {
   display: flex;
-  justify-content: space-between;
-  padding: 1em;
-  padding-bottom: 20em;
-}
-
-body {
-  background-color: $erieBlack;
-  background-image: url($bgImage);
-  color: #fffcf2;
-  margin: 0;
-  height: 100vh;
-  font-family: Helvetica neue, roboto;
-}
-
-main {
-  display: flex;
+  height: 100%;
+  width: 90%;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
+
+
+  form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    #title {
+      display: flex;
+      padding: 2.5em;
+    }
+
+    #coordinates {
+      display: flex;
+      padding: 2.5em;
+      justify-content: center;
+    }
+
+    #submit-button {
+      padding: 5em;
+
+      #newMapButton {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 9em;
+        height:4em;
+      }
+
+    }
+
+    input{
+      width: 12em;
+      height: 3.5em;
+    }
+
+    .latLong {
+      width: 9em;
+      height: 3em;
+    }
+  }
 }

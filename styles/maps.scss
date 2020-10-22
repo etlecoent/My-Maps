@@ -1,26 +1,5 @@
 @import 'ressources';
 
-nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1em;
-}
-
-body {
-  background-color: $erieBlack;
-  background-image: url($bgImage);
-  color: #fffcf2;
-  margin: 0;
-  height: 100vh;
-  font-family: Helvetica neue, roboto;
-}
-
-main {
-  display: flex;
-  justify-content: center;
-  height: 100%;
-}
 
 .smallMapSection {
   display: flex;
@@ -31,32 +10,39 @@ main {
   align-items: center;
   flex-wrap: wrap;
 
-  .smallMap {
-    height: 30em;
-    width: 40em;
+  .smallMapContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 2em;
+
+    .smallMap {
+      height: 30em;
+      width: 40em;
+      border: solid $blackOlive 0.5em;
+    }
+
+    .buttonsMap {
+      display:flex;
+      flex-direction: row-reverse;
+      justify-content: space-evenly;
+      align-items: center;
+      width: 100%;
+      padding-top: 1.5em;
+    }
   }
-
-}#smallMapContainer {
-  border: 20 px solid white;
-}
-.navButtons {
-  display : flex;
-  flex-direction:column;
-  margin: 0%;
-  padding: 0%;
-  align-items: center;
 }
 
-#logoLink {
-  font-size: larger;
-}
-#logoutButton {
-  margin-left: 2em;
-}
-.smallMapContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-bottom: 2em;
-}
+@media only screen and (max-width: 500px) {
 
+  .smallMapSection {
+
+    .smallMapContainer {
+
+      .smallMap {
+        height: 20em;
+        width: 25em;
+      }
+    }
+  }
+}
