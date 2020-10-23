@@ -10,6 +10,7 @@ const express = require('express');
 const router  = express.Router();
 
 module.exports = (db) => {
+
   router.get("/maps", (req, res) => {
     let user_id = req.session.user_id ? req.session.user_id : null;
 
@@ -98,7 +99,7 @@ module.exports = (db) => {
     }
   });
 
-  router.get("/pins/maps/:id", (req, res) => {
+  router.get("/maps/:id/pins/", (req, res) => {
     let user_id = req.session.user_id ? req.session.user_id : null;
     let map_id = req.params.id;
     let query = ` SELECT pins.*
@@ -150,9 +151,36 @@ module.exports = (db) => {
     if(userId) {
       let query = `DELETE FROM pins
                   WHERE pins.id = $1;`
+
       db.query(query, [pinId]).then(dataQuery => {
 
         res.send({message:`pin${pinId} deleted`});
+
+      }).catch(err => {
+        console.log(err)
+      })
+    }
+   })
+
+   router.put("/maps/:mapId/pins/:pinId", (req, res) => {
+    let userId = req.session.user_id ? req.session.user_id : null;
+    let mapId = req.params.mapId;
+    let pinId = req.params.pinId;
+
+    let title = req.body.title;
+    let description = req.body.description;
+    let image_url = req.body.image_url;
+
+    console.log(title, description, image_url);
+
+    if(userId) {
+      let query = ` UPDATE pins
+                    SET title = $1, description = $2, image_url = $3
+                    WHERE map_id = $4 AND pins.id = $5;`
+
+      db.query(query, [title, description, image_url, mapId, pinId]).then(dataQuery => {
+
+        res.send({message:`pin${pinId} updated`});
 
       }).catch(err => {
         console.log(err)
