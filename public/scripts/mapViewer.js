@@ -9,7 +9,7 @@ $(document).ready(() => {
       addMapContainer(m.id);
       addMapDiv(m.id);
       mapsObj[m.id] = mapDrawer(m.id, m.title, [m.latitude, m.longitude]);
-      $.get(`/api/pins/maps/${m.id}`).then(pins => {
+      $.get(`/api/maps/${m.id}/pins/`).then(pins => {
         for (let p of pins) {
           pinsDrawer(m.id, p.title, p.description, p.latitude, p.longitude, p.image_url)
         }
