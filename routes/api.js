@@ -7,9 +7,10 @@
 
 const { query } = require('express');
 const express = require('express');
-const router = express.Router();
+const router  = express.Router();
 
 module.exports = (db) => {
+
   router.get("/maps", (req, res) => {
     let user_id = req.session.user_id ? req.session.user_id : null;
 
@@ -21,13 +22,13 @@ module.exports = (db) => {
 
       db.query(query, [user_id]).then(dataQuery => {
         const maps = dataQuery.rows;
-        res.send({ maps, user_id });
+        res.send({maps, user_id});
       })
-        .catch(err => {
-          res
-            .status(500)
-            .json({ error: err.message });
-        });
+      .catch(err => {
+        res
+          .status(500)
+          .json({ error: err.message });
+      });
     } else {
       let query = ` SELECT maps.*
                     FROM maps
@@ -35,13 +36,13 @@ module.exports = (db) => {
 
       db.query(query).then(dataQuery => {
         const maps = dataQuery.rows;
-        res.send({ maps, user_id });
+        res.send({maps, user_id});
       })
-        .catch(err => {
-          res
-            .status(500)
-            .json({ error: err.message });
-        });
+      .catch(err => {
+        res
+          .status(500)
+          .json({ error: err.message });
+      });
     }
   });
 
@@ -50,7 +51,7 @@ module.exports = (db) => {
 
     if (user_id) {
 
-      const { title, latitude: lat, longitude: long } = req.body;
+      const {title, latitude:lat, longitude:long} = req.body;
       const titleTrim = title.trim();
       const latitude = Number(lat);
       const longitude = Number(long);
@@ -63,14 +64,15 @@ module.exports = (db) => {
         const map_id = dataQuery.rows[0].id;
         res.redirect(`../users/maps/${map_id}`);
       })
-        .catch(err => {
-          res
-            .status(500)
-            .json({ error: err.message });
-        });
+      .catch(err => {
+        res
+          .status(500)
+          .json({ error: err.message });
+      });
     }
   });
 
+  ///////////// NOT SURE WE NEED THIS ONE IN THE API
   router.get("/maps/:id/edit", (req, res) => {
     let user_id = req.session.user_id ? req.session.user_id : null;
     let map_id = req.params.id;
@@ -84,20 +86,20 @@ module.exports = (db) => {
 
       db.query(query, [map_id]).then(dataQuery => {
         const maps = dataQuery.rows;
-        res.send({ maps, user_id });
+        res.send({maps, user_id});
       })
-        .catch(err => {
-          res
-            .status(500)
-            .json({ error: err.message });
-        });
+      .catch(err => {
+        res
+          .status(500)
+          .json({ error: err.message });
+      });
     } else {
       // Display a login and a register button
-      // res.render("../views/mapViewer", templateVars);
+        // res.render("../views/mapViewer", templateVars);
     }
   });
 
-  router.get("/pins/maps/:id", (req, res) => {
+  router.get("/maps/:id/pins/", (req, res) => {
     let user_id = req.session.user_id ? req.session.user_id : null;
     let map_id = req.params.id;
     let query = ` SELECT pins.*
@@ -109,11 +111,11 @@ module.exports = (db) => {
       const pins = dataQuery.rows;
       res.send(pins);
     })
-      .catch(err => {
-        res
-          .status(500)
-          .json({ error: err.message });
-      });
+    .catch(err => {
+      res
+        .status(500)
+        .json({ error: err.message });
+    });
   });
 
   router.get("/maps/favoriteMaps", (req, res) => {
@@ -127,39 +129,66 @@ module.exports = (db) => {
 
       db.query(query, [user_id]).then(dataQuery => {
         let favoriteMaps = dataQuery.rows;
-        res.send({ favoriteMaps, user_id });
+        res.send({favoriteMaps, user_id});
       })
-        .catch(err => {
-          res
-            .status(500)
-            .json({ error: err.message });
-        });
+      .catch(err => {
+        res
+          .status(500)
+          .json({ error: err.message });
+      });
 
     } else {
       let favoriteMaps = [];
-      res.send({ favoriteMaps })
+      res.send({favoriteMaps})
     }
 
   });
 
-  router.delete("/maps/:mapId/pins/:pinId", (req, res) => {
+  router.delete("/maps/:mapId/pins/:pinId", (req,res) => {
     let userId = req.session.user_id ? req.session.user_id : null;
     let mapId = req.params.mapId;
     let pinId = req.params.pinId;
-    if (userId) {
+    if(userId) {
       let query = `DELETE FROM pins
                   WHERE pins.id = $1;`
+
       db.query(query, [pinId]).then(dataQuery => {
 
-        res.send({ message: `pin${pinId} deleted` });
+        res.send({message:`pin${pinId} deleted`});
 
       }).catch(err => {
         console.log(err)
       })
     }
-  })
+   })
 
-  router.post("/maps/:id/pins/", (req, res) => {
+   router.put("/maps/:mapId/pins/:pinId", (req, res) => {
+    let userId = req.session.user_id ? req.session.user_id : null;
+    let mapId = req.params.mapId;
+    let pinId = req.params.pinId;
+
+    let title = req.body.title;
+    let description = req.body.description;
+    let image_url = req.body.image_url;
+
+    console.log(title, description, image_url);
+
+    if(userId) {
+      let query = ` UPDATE pins
+                    SET title = $1, description = $2, image_url = $3
+                    WHERE map_id = $4 AND pins.id = $5;`
+
+      db.query(query, [title, description, image_url, mapId, pinId]).then(dataQuery => {
+
+        res.send({message:`pin${pinId} updated`});
+
+      }).catch(err => {
+        console.log(err)
+      })
+    }
+   })
+
+   router.post("/maps/:id/pins/", (req,res) => {
     let userId = req.session.user_id ? req.session.user_id : null;
     // let pinId = req.params.id;
     let id = req.params.id;
@@ -176,7 +205,7 @@ module.exports = (db) => {
     Promise.all(queriesArray).then(() => {
       res.send("okay")
     }).catch(err => {
-      console.log(err)
+        console.log(err)
     })
   });
 
@@ -191,13 +220,13 @@ module.exports = (db) => {
 
     db.query(query, [map_id]).then(dataQuery => {
       const maps = dataQuery.rows;
-      res.send({ maps, user_id });
+      res.send({maps, user_id});
     })
-      .catch(err => {
-        res
-          .status(500)
-          .json({ error: err.message });
-      });
+    .catch(err => {
+      res
+        .status(500)
+        .json({ error: err.message });
+    });
   });
 
 
@@ -212,11 +241,11 @@ module.exports = (db) => {
 
         res.redirect(`back`);
       })
-        .catch(err => {
-          res
-            .status(500)
-            .json({ error: err.message });
-        });
+      .catch(err => {
+        res
+          .status(500)
+          .json({ error: err.message });
+      });
 
     } else {
       res
@@ -238,11 +267,11 @@ module.exports = (db) => {
 
         res.redirect(`back`);
       })
-        .catch(err => {
-          res
-            .status(500)
-            .json({ error: err.message });
-        });
+      .catch(err => {
+        res
+          .status(500)
+          .json({ error: err.message });
+      });
 
     } else {
       res
@@ -263,13 +292,13 @@ module.exports = (db) => {
 
       db.query(query, [map_id, user_id]).then(dataQuery => {
         let favoriteMaps = dataQuery.rows;
-        res.send({ favoriteMaps, user_id });
+        res.send({favoriteMaps, user_id});
       })
-        .catch(err => {
-          res
-            .status(500)
-            .json({ error: err.message });
-        });
+      .catch(err => {
+        res
+          .status(500)
+          .json({ error: err.message });
+      });
 
     } else {
       res
@@ -289,13 +318,13 @@ module.exports = (db) => {
 
       db.query(query, [map_id, user_id]).then(dataQuery => {
         let contributions = dataQuery.rows;
-        res.send({ contributions, user_id });
+        res.send({contributions, user_id});
       })
-        .catch(err => {
-          res
-            .status(500)
-            .json({ error: err.message });
-        });
+      .catch(err => {
+        res
+          .status(500)
+          .json({ error: err.message });
+      });
 
     } else {
       res
@@ -315,11 +344,11 @@ module.exports = (db) => {
         let contributions = dataQuery.rows;
         res.send("Contributed!");
       })
-        .catch(err => {
-          res
-            .status(500)
-            .json({ error: err.message });
-        });
+      .catch(err => {
+        res
+          .status(500)
+          .json({ error: err.message });
+      });
 
     } else {
       res

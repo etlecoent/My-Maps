@@ -2,6 +2,7 @@ let currentURL = $(location).attr('href');
 let apiURL = currentURL.replace('http://localhost:8080/users', '/api');
 
 const mapsObj = {};
+let selectedMarker = {};
 
 $(document).ready(() => {
   let i = 0;
@@ -12,7 +13,8 @@ $(document).ready(() => {
     addMapContainer(id);
     addMapDiv(id);
     mapsObj[id] = mapDrawer(id, title, [latitude, longitude]);
-    $.get(`/api/pins/maps/${id}`).then(pins => {
+
+    $.get(`/api/maps/${id}/pins/`).then(pins => {
       for (let p of pins) {
         pinsDrawerEditor(id, p.title, p.description, p.latitude, p.longitude, p.image_url, p.id);
       }
@@ -47,13 +49,13 @@ $(document).ready(() => {
         event.preventDefault();
         $.ajax({
           method: "POST",
-          url: `${window.location.origin}/api/maps/${id}/pins/`,
-          data: { markers }
+          url: `/api/maps/${id}/pins/`,
+          data: {markers}
         }).then(() => {
           $.ajax({
             method: "POST",
-            url: `${window.location.origin}/api/maps/${id}/contributions/`,
-            data: { user_id }
+            url: `/api/maps/${id}/contributions/`,
+            data: {user_id}
           }).then(() => {
             window.location.replace(`/users/maps/${id}/edit`);
           })
@@ -62,21 +64,62 @@ $(document).ready(() => {
     });
   });
 
-  $(`.smallMapSection`).on("submit", ".deleteForm", function (event) {
+  $(`.smallMapSection`).on("submit", ".editForm", function(evt) {
+    evt.preventDefault();
+
+    let pinId = $(this).attr('id');
+    let mapId =  $(this).data('mapid');
+    let newMarker = {};
+
+    newMarker.title = evt.target.marker_title.value;
+    newMarker.description = evt.target.marker_description.value;
+    newMarker.image_url = evt.target.marker_image.value;
+
+    $.ajax({
+      method: "PUT",
+      url: `/api/maps/${mapId}/pins/${pinId}`,
+      data: newMarker
+
+    }).then(() => {
+      $.ajax({
+        method: "POST",
+        url: `/api/maps/${mapId}/contributions/`
+      }).then(() => {
+        window.location.replace(`/users/maps/${mapId}/edit`);
+      })
+    })
+  })
+  $(`.smallMapSection`).on("click", "#editPin", function(event) {
     event.preventDefault()
-    console.log("delete clicked!")
+
+    let pinId = $(this).parent().attr('id');
+    let mapId =  $(this).parent().data('mapid');
+
+    let newForm = `<form class="editForm" id="${pinId}" data-mapId="${mapId}">
+                    <div class="form-group">
+                     <input type='text' name='marker_title' placeholder="Title"  class="form-control form-control-sm" aria-describedby="inputGroup-sizing-sm"/>
+                      <input type='text' name='marker_description' placeholder="Description" class="form-control form-control-sm" aria-describedby="inputGroup-sizing-sm"/>
+                      <input type='url' placeholder="https://" name='marker_image' class="form-control form-control-sm" aria-describedby="inputGroup-sizing-sm"/>
+                      <button id="buttonSave" type="submit" class="btn btn-outline-success btn-sm">Save</button>
+                   </form>`
+
+    $(this).parent().parent().html(newForm);
+  })
+
+  $(`.smallMapSection`).on("submit", ".deleteForm", function(event) {
+    event.preventDefault();
     let pinId = $(this).attr('id');
     let mapId = $(this).data('mapid');
     let markers = mapId;
+
     $.ajax({
       method: "DELETE",
-      url: `${window.location.origin}/api/maps/${mapId}/pins/${pinId}`,
-      data: { markers }
-    }).then((data) => {
-      console.log(data);
+      url: `/api/maps/${mapId}/pins/${pinId}`,
+      data: {markers}
+    }).then(() => {
       $.ajax({
         method: "POST",
-        url: `${window.location.origin}/api/maps/${mapId}/contributions/`
+        url: `/api/maps/${mapId}/contributions/`
       }).then(() => {
         window.location.replace(`/users/maps/${mapId}/edit`);
       })

@@ -9,7 +9,7 @@ $(document).ready(() => {
       addMapContainer(m.id);
       addMapDiv(m.id);
       mapsObj[m.id] = mapDrawer(m.id, m.title, [m.latitude, m.longitude]);
-      $.get(`/api/pins/maps/${m.id}`).then(pins => {
+      $.get(`/api/maps/${m.id}/pins/`).then(pins => {
         for (let p of pins) {
           pinsDrawer(m.id, p.title, p.description, p.latitude, p.longitude, p.image_url)
         }
@@ -21,7 +21,6 @@ $(document).ready(() => {
 
         // Ajax query to get FavoriteMaps and check if the m (current map) is favorite
         $.get(`/api/maps/${m.id}/favoriteMaps/`).then(({ favoriteMaps }) => {
-
           if (favoriteMaps.length) {
             addUnFavoriteButton(m.id);
           } else {
@@ -38,6 +37,5 @@ $(document).ready(() => {
       }
     }
   });
-
 });
 
