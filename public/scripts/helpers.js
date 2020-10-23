@@ -94,12 +94,13 @@ const pinsDrawer = function (mapId, title, description, latitude, longitude, ima
 
 // Adds a pin to the map with a popUp windows that enables the user to delete the pin
 const pinsDrawerEditor = function (mapId, title, description, latitude, longitude, image_url, pinId) {
-  // data-mapId=... mapId
+
   let infos = `<form class="deleteForm" id="${pinId}" data-mapId="${mapId}">
   <h3>${title}</h3>
   <article>${description}</article>
   <img src="${image_url}" width="30em" height="30em">
     <button type="submit">Delete</button>
+    <button type="button" id="editPin">Edit</button>
   </form>`
 
 
