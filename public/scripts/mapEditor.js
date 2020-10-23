@@ -26,7 +26,7 @@ $(document).ready(() => {
                     <div class="form-group">
                       <input type='text' name='marker_title' placeholder="Title" class="form-control form-control-sm" aria-describedby="inputGroup-sizing-sm"/>
                       <input type='text' name='marker_description' placeholder="Description" class="form-control form-control-sm" aria-describedby="inputGroup-sizing-sm"/>
-                      <input type='text' name='marker_image' placeholder="Image Url" class="form-control form-control-sm" aria-describedby="inputGroup-sizing-sm"/>
+                      <input type='url' name='marker_image' placeholder="Image Url" class="form-control form-control-sm" aria-describedby="inputGroup-sizing-sm"/>
                       <button type="submit" id="saveButton" class="btn btn-outline-success btn-sm">Add</button>
                     </div>
                   </form>`).openPopup();
@@ -35,9 +35,9 @@ $(document).ready(() => {
         evt.preventDefault()
         let markerTemp = {};
 
-        markerTemp.title = evt.target.marker_title.value;
-        markerTemp.description = evt.target.marker_description.value;
-        markerTemp.image_url = evt.target.marker_image.value;
+        markerTemp.title = escape(evt.target.marker_title.value);
+        markerTemp.description = escape(evt.target.marker_description.value);
+        markerTemp.image_url = escape(evt.target.marker_image.value);
         markerTemp.lat = marker._latlng.lat
         markerTemp.lng = marker._latlng.lng
         markers.push(markerTemp);
@@ -71,9 +71,9 @@ $(document).ready(() => {
     let mapId =  $(this).data('mapid');
     let newMarker = {};
 
-    newMarker.title = evt.target.marker_title.value;
-    newMarker.description = evt.target.marker_description.value;
-    newMarker.image_url = evt.target.marker_image.value;
+    newMarker.title = escape(evt.target.marker_title.value);
+    newMarker.description = escape(evt.target.marker_description.value);
+    newMarker.image_url = escape(evt.target.marker_image.value);
 
     $.ajax({
       method: "PUT",

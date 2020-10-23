@@ -1,3 +1,10 @@
+// Keeps our site safe from injection attacks
+const escape = function (str) {
+  let div = document.createElement('div');
+  div.appendChild(document.createTextNode(str));
+  return div.innerHTML;
+};
+
 // Creates a div that will hold a map and a button
 const addMapContainer = function (mapId) {
   let newDiv = `<div class="smallMapContainer" id="smallMapContainer${mapId}"></div>`
@@ -20,7 +27,7 @@ const mapDrawer = function (mapId, titleString, latLongArr) {
   const map = L.map(`smallMap${mapId}`).setView(latLongArr, 10);
   L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
     maxZoom: 18,
-    attribution: `${titleString}`,
+    attribution: `${escape(titleString)}`,
     id: 'mapbox/streets-v11',
     tileSize: 512,
     zoomOffset: -1,
