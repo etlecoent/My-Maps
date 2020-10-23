@@ -1,3 +1,8 @@
+const express = require('express');
+const router = express.Router();
+
+
+
 /*
  * All routes for Users are defined here
  * Since this file is loaded in server.js into api/users,
@@ -5,17 +10,14 @@
  * See: https://expressjs.com/en/guide/using-middleware.html#middleware.router
  */
 
-const express = require('express');
-const router  = express.Router();
-
 // GET Route for Log In at /login
 module.exports = (db) => {
 
-  router.get('/maps/new', (req,res) => {
+  router.get('/maps/new', (req, res) => {
 
     let user_id = req.session.user_id ? req.session.user_id : null;
     let templateVars = {
-      name : null
+      name: null
     };
 
     if (user_id) {
@@ -30,11 +32,11 @@ module.exports = (db) => {
 
         res.render("../views/mapCreator", templateVars);
       })
-      .catch(err => {
-        res
-          .status(500)
-          .json({ error: err.message });
-      });
+        .catch(err => {
+          res
+            .status(500)
+            .json({ error: err.message });
+        });
     } else {
       res
         .status(401)
@@ -46,7 +48,7 @@ module.exports = (db) => {
 
     let user_id = req.session.user_id ? req.session.user_id : null;
     let templateVars = {
-      name : null
+      name: null
     };
 
     if (user_id) {
@@ -61,14 +63,14 @@ module.exports = (db) => {
 
         res.render("../views/maps", templateVars);
       })
-      .catch(err => {
-        res
-          .status(500)
-          .json({ error: err.message });
-      });
+        .catch(err => {
+          res
+            .status(500)
+            .json({ error: err.message });
+        });
     } else {
       // Display a login and a register button & display all maps
-        res.render("../views/maps", templateVars);
+      res.render("../views/maps", templateVars);
     }
   });
 
@@ -77,7 +79,7 @@ module.exports = (db) => {
     let user_id = req.session.user_id ? req.session.user_id : null;
 
     let templateVars = {
-      name : null,
+      name: null,
     };
 
     if (user_id) {
@@ -91,11 +93,11 @@ module.exports = (db) => {
         templateVars.name = dataQuery.rows[0].user_name;
         res.render("../views/mapEditor", templateVars);
       })
-      .catch(err => {
-        res
-          .status(500)
-          .json({ error: err.message });
-      });
+        .catch(err => {
+          res
+            .status(500)
+            .json({ error: err.message });
+        });
     } else {
       res
         .status(401)
@@ -108,7 +110,7 @@ module.exports = (db) => {
     let user_id = req.session.user_id ? req.session.user_id : null;
 
     let templateVars = {
-      name : null,
+      name: null,
     };
 
     if (user_id) {
@@ -123,14 +125,14 @@ module.exports = (db) => {
 
         res.render("../views/mapViewer", templateVars);
       })
-      .catch(err => {
-        res
-          .status(500)
-          .json({ error: err.message });
-      });
+        .catch(err => {
+          res
+            .status(500)
+            .json({ error: err.message });
+        });
     } else {
       // Display a login button
-        res.render("../views/mapViewer", templateVars);
+      res.render("../views/mapViewer", templateVars);
     }
 
   });
@@ -145,7 +147,7 @@ module.exports = (db) => {
 
   // Route for Log Out at /logout
 
-  router.post('/logout', (req,res) => {
+  router.post('/logout', (req, res) => {
 
     req.session.user_id = null;
     res.redirect('/users/maps');

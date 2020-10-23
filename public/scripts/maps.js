@@ -2,9 +2,9 @@ const mapsObj = {};
 
 
 $(document).ready(() => {
-  $.get('/api/maps').then(({maps:mapsData, user_id}) => {
+  $.get('/api/maps').then(({ maps: mapsData, user_id }) => {
     let sortedMaps = [];
-    $.get("/api/maps/favoriteMaps").then(({favoriteMaps}) => {
+    $.get("/api/maps/favoriteMaps").then(({ favoriteMaps }) => {
       sortedMaps = favoriteMaps;
       // Remove duplicates
       for (let map of mapsData) {
@@ -28,7 +28,7 @@ $(document).ready(() => {
         addMapContainer(m.id);
         addMapDiv(m.id);
         mapsObj[m.id] = mapDrawer(m.id, m.title, [m.latitude, m.longitude]);
-        $(`#smallMap${m.id}`).click( () => {
+        $(`#smallMap${m.id}`).click(() => {
           window.location.replace(`/users/maps/${m.id}`);
         });
 
@@ -38,12 +38,12 @@ $(document).ready(() => {
           }
         });
         // If the user is logged in
-        if(user_id) {
+        if (user_id) {
           addButtonsDiv(m.id);
           addEditButton(m.id);
 
           // Ajax query to get FavoriteMaps and check if the m (current map) is favorite
-          $.get(`/api/maps/${m.id}/favoriteMaps/`).then (({favoriteMaps}) => {
+          $.get(`/api/maps/${m.id}/favoriteMaps/`).then(({ favoriteMaps }) => {
 
             if (favoriteMaps.length) {
               addUnFavoriteButton(m.id);
@@ -52,7 +52,7 @@ $(document).ready(() => {
             }
 
             // Ajax query to get contributions of the user on this map and checks if the user as contributed
-            $.get(`/api/maps/${m.id}/contributions`).then (({contributions}) => {
+            $.get(`/api/maps/${m.id}/contributions`).then(({ contributions }) => {
               if (contributions.length) {
                 addContributorIcon(m.id);
               }
@@ -63,4 +63,3 @@ $(document).ready(() => {
     });
   })
 });
-

@@ -2,7 +2,8 @@
 
 DROP TABLE IF EXISTS maps CASCADE;
 
-CREATE TABLE maps (
+CREATE TABLE maps
+(
   id SERIAL PRIMARY KEY NOT NULL,
   title VARCHAR(150) NOT NULL,
   longitude Decimal(9,6),

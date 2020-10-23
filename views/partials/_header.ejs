@@ -1,23 +1,25 @@
+<!-- partials file for the navigation bar buttons -->
+
 <nav>
   <div class="navButtons">
-    <a class="btn btn-link" id="logoLink" href="/users/maps" role="button"><img src="/imgs/logo.png" alt="Logo"/></a>
+    <a class="btn btn-link" id="logoLink" href="/users/maps" role="button"><img src="/imgs/logo.png" alt="Logo" /></a>
     <form method="GET" action="/users/maps/new">
-    <button type="submit" id="newMapButton" class="btn btn-outline-success">CREATE NEW MAP</button>
-  </form>
-</div>
+      <button type="submit" id="newMapButton" class="btn btn-outline-success">CREATE NEW MAP</button>
+    </form>
+  </div>
 
-<div class="userName">
-  <h1>
-    <strong><%= name %></strong>
-  </h1>
-</div>
+  <div class="userName">
+    <h1>
+      <strong><%= name %></strong>
+    </h1>
+  </div>
 
-<div class="navButtons">
-  <% if(name) {%>
+  <div class="navButtons">
+    <% if(name) {%>
     <form method="POST" action="/users/logout">
       <button type="submit" id="logoutButton" class="btn btn-outline-danger">LOGOUT</button>
     </form>
-  <%} else {%>
+    <%} else {%>
     <form method="GET" action="/users/login">
       <button type="submit" id="loginButton" class="btn btn-primary">LOGIN</button>
     </form>

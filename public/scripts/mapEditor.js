@@ -7,8 +7,8 @@ $(document).ready(() => {
   let i = 0;
   let markers = [];
 
-  $.get(`${apiURL}`).then(({maps:mapData, user_id}) => {
-    const {id, title, latitude, longitude} = mapData[0]
+  $.get(`${apiURL}`).then(({ maps: mapData, user_id }) => {
+    const { id, title, latitude, longitude } = mapData[0]
     addMapContainer(id);
     addMapDiv(id);
     mapsObj[id] = mapDrawer(id, title, [latitude, longitude]);
@@ -17,18 +17,19 @@ $(document).ready(() => {
         pinsDrawerEditor(id, p.title, p.description, p.latitude, p.longitude, p.image_url, p.id);
       }
     });
-    mapsObj[id].on("click", function(evt) {
+    mapsObj[id].on("click", function (evt) {
       let marker = L.marker([evt.latlng.lat, evt.latlng.lng]).addTo(mapsObj[id]);
-      marker.bindPopup(`<div class="popupAddForm">
-                        <form id="${i}">
-                        <p>Title: <input type='text' name='marker_title'/></p>
-                        <p>Description: <input type='text' name='marker_description'/></p>
-                        <p>Image Url: <input type='text' name='marker_image'/></p>
-                        <button id="buttonSave" class="btn btn-outline-success type="submit">Add</button>
-                        </form>`).openPopup();
+      marker.bindPopup(`
+                  <form id="${i}">
+                    <div class="form-group">
+                      <input type='text' name='marker_title' placeholder="Title" class="form-control form-control-sm" aria-describedby="inputGroup-sizing-sm"/>
+                      <input type='text' name='marker_description' placeholder="Description" class="form-control form-control-sm" aria-describedby="inputGroup-sizing-sm"/>
+                      <input type='text' name='marker_image' placeholder="Image Url" class="form-control form-control-sm" aria-describedby="inputGroup-sizing-sm"/>
+                      <button type="submit" id="saveButton" class="btn btn-outline-success btn-sm">Add</button>
+                    </div>
+                  </form>`).openPopup();
 
-
-      $(`#${i}`).on("submit", function(evt) {
+      $(`#${i}`).on("submit", function (evt) {
         evt.preventDefault()
         let markerTemp = {};
 
@@ -42,17 +43,17 @@ $(document).ready(() => {
         marker.closePopup();
       })
 
-      $('#buttonUpdate').submit(function(event) {
+      $('#buttonUpdate').submit(function (event) {
         event.preventDefault();
         $.ajax({
           method: "POST",
           url: `${window.location.origin}/api/maps/${id}/pins/`,
-          data: {markers}
+          data: { markers }
         }).then(() => {
           $.ajax({
             method: "POST",
             url: `${window.location.origin}/api/maps/${id}/contributions/`,
-            data: {user_id}
+            data: { user_id }
           }).then(() => {
             window.location.replace(`/users/maps/${id}/edit`);
           })
@@ -61,16 +62,16 @@ $(document).ready(() => {
     });
   });
 
-  $(`.smallMapSection`).on("submit", ".deleteForm", function(event) {
+  $(`.smallMapSection`).on("submit", ".deleteForm", function (event) {
     event.preventDefault()
     console.log("delete clicked!")
     let pinId = $(this).attr('id');
-    let mapId =  $(this).data('mapid');
+    let mapId = $(this).data('mapid');
     let markers = mapId;
     $.ajax({
       method: "DELETE",
       url: `${window.location.origin}/api/maps/${mapId}/pins/${pinId}`,
-      data: {markers}
+      data: { markers }
     }).then((data) => {
       console.log(data);
       $.ajax({

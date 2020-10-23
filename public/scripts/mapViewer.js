@@ -4,7 +4,7 @@ const mapsObj = {};
 
 $(document).ready(() => {
 
-  $.get(`${apiURL}`).then(({maps:mapData, user_id}) => {
+  $.get(`${apiURL}`).then(({ maps: mapData, user_id }) => {
     for (let m of mapData) {
       addMapContainer(m.id);
       addMapDiv(m.id);
@@ -15,12 +15,12 @@ $(document).ready(() => {
         }
       });
       // If the user is logged in, add those buttons
-      if(user_id) {
+      if (user_id) {
         addButtonsDiv(m.id);
         addEditButton(m.id);
 
         // Ajax query to get FavoriteMaps and check if the m (current map) is favorite
-        $.get(`/api/maps/${m.id}/favoriteMaps/`).then (({favoriteMaps}) => {
+        $.get(`/api/maps/${m.id}/favoriteMaps/`).then(({ favoriteMaps }) => {
 
           if (favoriteMaps.length) {
             addUnFavoriteButton(m.id);
@@ -29,7 +29,7 @@ $(document).ready(() => {
           }
 
           // Ajax query to get contributions of the user on this map and checks if the user as contributed
-          $.get(`/api/maps/${m.id}/contributions`).then (({contributions}) => {
+          $.get(`/api/maps/${m.id}/contributions`).then(({ contributions }) => {
             if (contributions.length) {
               addContributorIcon(m.id);
             }
@@ -40,6 +40,4 @@ $(document).ready(() => {
   });
 
 });
-
-
 
