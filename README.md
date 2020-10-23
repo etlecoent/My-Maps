@@ -1,7 +1,7 @@
 
 # MyMaps
 
-A web app project for LHL Bootcamp. MyMaps allows authenticated users to create custom maps and group any points of interest "pins" they desire. 
+A web app project for LHL Bootcamp. MyMaps allows authenticated users to create custom maps and group any points of interest "pins" they desire.
 
 # Project Setup
 
@@ -32,12 +32,16 @@ A web app project for LHL Bootcamp. MyMaps allows authenticated users to create 
 * "pg": "^6.4.2",
 * "pg-native": "^3.0.0"
 
-# Wireframe
-
 # ERD
+! ["Final version of the ERD"](docs/ERD/ERD_final.png)
 
 # Screenshots
 
+!["Desktop user profil where all the maps are listed and ordered by favorites"](docs/screenshots/desktop_maps.png)
+!["Mobile user profil where all the maps are listed and ordered by favorites"](docs/screenshots/mobile_maps.png)
+!["View to inspect a map"](docs/screenshots/desktop_view.png)
+!["View to edit/delete pins information"](docs/screenshots/desktop_inspect.png)
+!["View when editing a pin information"](docs/screenshots/desktop_edit.png)
 
 
 
